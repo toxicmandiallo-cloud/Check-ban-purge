@@ -3,322 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CELESTE - Brydly</title>
+    <title>THE BRYDLY PROTOCOL</title>
+    <!-- Librairie pour les sons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
         /* --- STYLE GLOBAL --- */
         body { 
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); 
+            background-color: #080808; 
             color: #fff; 
-            font-family: 'Montserrat', sans-serif; 
+            font-family: 'Inter', sans-serif; 
             margin: 0; 
             padding: 0; 
-            min-height: 100vh; 
-            overflow-x: hidden; 
             display: flex; 
-            flex-direction: column; 
+            height: 100vh; 
+            overflow: hidden;
         }
 
-        /* --- FOND ANIMÉ (PARTICULES) --- */
-        #canvas-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
+        /* --- BARRE LATÉRALE (SIDEBAR) --- */
+        .sidebar {
+            width: 260px;
+            background: #111;
+            border-right: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            transition: 0.3s;
+            z-index: 10;
         }
-        
-        /* --- BARRE DE NAVIGATION --- */
-        .navbar { 
-            display: flex; 
-            justify-content: center; 
-            background: rgba(15, 12, 41, 0.7); 
-            backdrop-filter: blur(10px); 
-            border-bottom: 1px solid rgba(0, 255, 255, 0.2); 
-            padding: 15px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            flex-wrap: wrap; 
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        .sidebar h2 {
+            text-align: center;
+            color: #fff;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            line-height: 1.5;
         }
-        .navbar button { 
-            background: transparent; 
-            color: #aaa; 
-            border: none; 
-            padding: 10px 20px; 
-            font-size: 0.9em; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            font-weight: 600;
+        .sidebar button {
+            background: transparent;
+            border: none;
+            color: #777;
+            padding: 18px 25px;
+            text-align: left;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 1px;
         }
-        .navbar button:hover, .navbar button.active { 
-            color: #00ffff; 
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; 
+        .sidebar button:hover, .sidebar button.active {
+            background: #1a1a1a;
+            color: #fff;
+            border-left: 3px solid #fff;
         }
-        
-        /* --- CONTENEURS --- */
-        .page { display: none; padding: 40px 20px; animation: fadeIn 0.6s; max-width: 500px; margin: 0 auto; flex: 1; position: relative; z-index: 10; }
+
+        /* --- CONTENU PRINCIPAL --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: radial-gradient(circle at top right, #111, #080808);
+            position: relative;
+        }
+
+        .page { display: none; width: 100%; max-width: 600px; animation: fadeIn 0.5s; margin-top: 20px; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- ÉCRAN D'ENTRÉE --- */
-        #overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #0f0c29; z-index: 9999; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: opacity 1s; 
-        }
-        #overlay h1 { 
-            color: #00ffff; font-size: 3em; letter-spacing: 15px; 
-            text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; 
-            animation: pulse 2s infinite; 
-        }
-        #overlay button { 
-            margin-top: 30px; padding: 15px 50px; 
-            background: transparent; color: #00ffff; 
-            border: 2px solid #00ffff; border-radius: 50px; 
-            font-size: 1.2em; cursor: pointer; transition: 0.3s; 
-            text-transform: uppercase; letter-spacing: 3px; 
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
-        }
-        #overlay button:hover { 
-            background: #00ffff; color: #0f0c29; 
-            box-shadow: 0 0 30px #00ffff; 
-        }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-
-        /* --- STYLE DES CARTES --- */
         .card { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            padding: 30px; 
-            border-radius: 20px; 
-            border: 1px solid rgba(0, 255, 255, 0.3); 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); 
+            background: rgba(20, 20, 20, 0.9); 
+            padding: 35px; 
+            border-radius: 12px; 
+            border: 1px solid #2a2a2a; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+            margin-bottom: 25px;
+        }
+        h2 { color: #fff; margin-top: 0; font-weight: 800; letter-spacing: 1px; }
+        p { color: #888; font-size: 0.95em; line-height: 1.6; }
+
+        /* --- ACCUEIL SPÉCIFIQUE --- */
+        .hero-title { 
+            font-size: 1.3em; 
             text-align: center; 
             margin-bottom: 20px; 
+            text-shadow: 0 0 20px rgba(255,255,255,0.2); 
+            font-family: monospace; 
+            letter-spacing: 1px; 
+            line-height: 1.8;
+            word-break: break-all;
         }
-        h2 { color: #00ffff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); margin-top: 0; letter-spacing: 1px; }
+        .countdown-box { 
+            text-align: center; 
+            font-family: monospace; 
+            font-size: 1.5em; 
+            color: #ff3333; 
+            background: #1a0a0a; 
+            padding: 20px; 
+            border-radius: 8px; 
+            border: 1px solid #500; 
+            margin: 20px 0;
+            text-shadow: 0 0 10px #ff0000;
+            animation: pulse-danger 2s infinite;
+        }
+        @keyframes pulse-danger { 0% { box-shadow: 0 0 10px #ff0000; } 50% { box-shadow: 0 0 30px #ff0000; } 100% { box-shadow: 0 0 10px #ff0000; } }
         
+        .join-btn { 
+            display: block; text-align: center; padding: 18px; 
+            background: #fff; color: #000; text-decoration: none; 
+            border-radius: 8px; font-weight: 800; font-size: 1.1em; 
+            margin-top: 20px; transition: 0.3s; letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+        .join-btn:hover { background: #ccc; transform: scale(1.02); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
+
+        /* --- GALERIE D'IMAGES --- */
+        .gallery { 
+            display: flex; gap: 15px; overflow-x: auto; padding: 15px 0; 
+            margin-top: 20px; scrollbar-width: none;
+        }
+        .gallery img { 
+            height: 150px; border-radius: 8px; border: 1px solid #333; 
+            transition: 0.3s; cursor: pointer; object-fit: cover; width: 200px;
+        }
+        .gallery img:hover { transform: scale(1.05); border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+
+        .about-text { 
+            background: #111; 
+            border-left: 3px solid #fff; 
+            padding: 15px; 
+            margin-top: 20px; 
+            font-style: italic; 
+            color: #ccc;
+            font-size: 0.95em;
+            font-family: monospace;
+        }
+
         /* --- FORMULAIRES --- */
-        input, textarea { 
-            padding: 15px; width: 100%; border-radius: 10px; 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            background: rgba(0, 0, 0, 0.3); color: #fff; 
+        input[type="text"], input[type="tel"], input[type="email"], textarea { 
+            padding: 16px; width: 100%; border-radius: 8px; 
+            border: 1px solid #333; background: #050505; color: #fff; 
             margin-bottom: 15px; outline: none; box-sizing: border-box; 
-            font-family: inherit; transition: 0.3s;
+            font-family: 'Inter', sans-serif; transition: 0.3s; font-size: 1em;
         }
-        input:focus, textarea:focus { border-color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); }
-        button.action-btn { 
-            padding: 15px; background: linear-gradient(90deg, #00ffff, #0088ff); 
-            color: #000; border: none; border-radius: 10px; 
-            cursor: pointer; font-weight: 800; font-size: 1em; 
-            width: 100%; transition: 0.3s; 
-            text-transform: uppercase; letter-spacing: 1px; 
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-        }
-        button.action-btn:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0, 255, 255, 0.6); }
+        input:focus, textarea:focus { border-color: #555; box-shadow: 0 0 10px rgba(255,255,255,0.1); }
         
-        /* --- CHAMP NUMERO AVEC + --- */
+        button.action-btn { 
+            padding: 16px; background: #fff; color: #000; 
+            border: none; border-radius: 8px; cursor: pointer; 
+            font-weight: 800; font-size: 1em; width: 100%; 
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        button.action-btn:hover { background: #ccc; }
+
         .phone-group { display: flex; gap: 10px; margin-bottom: 15px; }
         .phone-prefix { 
-            background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 10px; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            color: #00ffff; font-weight: bold; font-size: 1.1em; 
+            background: #1a1a1a; padding: 16px; border-radius: 8px; 
+            border: 1px solid #333; color: #fff; font-weight: bold; 
+            font-size: 1.1em; display: flex; align-items: center;
         }
         .phone-group input { margin-bottom: 0; flex: 1; }
 
-        /* --- GÉNÉRATEUR DE PROFIL --- */
-        #profile-preview { display: none; margin-top: 20px; position: relative; border-radius: 15px; overflow: hidden; box-shadow: 0 0 25px rgba(0, 255, 255, 0.5); }
+        #profile-preview { display: none; margin-top: 25px; position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
         #profile-preview img { width: 100%; display: block; }
         #profile-name-overlay { 
             position: absolute; bottom: 0; left: 0; width: 100%; 
-            text-align: center; color: #fff; font-size: 2em; font-weight: 800; 
-            text-shadow: 0 0 10px #00ffff, 2px 2px 4px #000; letter-spacing: 2px; 
-            padding: 20px; box-sizing: border-box; 
-            background: linear-gradient(transparent, rgba(15, 12, 41, 0.9)); 
+            text-align: center; color: #fff; font-size: 2.5em; font-weight: 800; 
+            text-shadow: 2px 2px 8px #000, 0 0 20px #000; letter-spacing: 4px; 
+            padding: 25px; box-sizing: border-box; 
+            background: linear-gradient(transparent, rgba(0,0,0,0.95)); 
         }
-        #download-btn { display: none; background: linear-gradient(90deg, #00ff88, #00cc66); color: #000; margin-top: 15px; }
-        #download-btn:hover { box-shadow: 0 0 25px rgba(0, 255, 136, 0.6); }
-
-        /* --- MESSAGE SIGNALER --- */
-        #signal-message { 
-            display: none; color: #00ffff; font-weight: 600; 
-            margin-top: 15px; padding: 15px; 
-            border: 1px solid rgba(0, 255, 255, 0.4); 
-            border-radius: 10px; background: rgba(0, 255, 255, 0.05); 
-        }
+        #download-btn { display: none; background: #fff; color: #000; margin-top: 15px; }
         
-        .timestamp { font-size: 0.75em; color: #888; margin-top: 10px; display: block; font-family: monospace; }
-
-        /* --- PIED DE PAGE --- */
-        .footer { 
-            text-align: center; padding: 20px; margin-top: auto; 
-            font-size: 0.8em; color: #666; 
-            border-top: 1px solid rgba(255, 255, 255, 0.05); 
-            letter-spacing: 2px; position: relative; z-index: 10;
+        #signal-message, #check-result { 
+            margin-top: 20px; padding: 20px; border-radius: 8px; 
+            font-weight: 600; display: none; line-height: 1.5;
         }
-        .footer span { color: #00ffff; font-weight: bold; text-shadow: 0 0 10px #00ffff; }
+        .success { background: #1a1a1a; border: 1px solid #333; color: #fff; border-left: 4px solid #00ff00; }
+        .error { background: #1a0a0a; border: 1px solid #500; color: #ff4444; border-left: 4px solid #ff0000; }
+        .timestamp { font-size: 0.8em; color: #888; margin-top: 10px; display: block; font-family: monospace; }
     </style>
 </head>
 <body>
 
-    <canvas id="canvas-bg"></canvas>
+    <!-- MUSIQUE DE FOND -->
+    <audio id="bg-music" autoplay loop></audio>
 
-    <div id="overlay">
-        <h1>CELESTE</h1>
-        <button onclick="enterSite()">ENTRER</button>
+    <div class="sidebar">
+        <h2>⊛⃝ 𝐓𝐇𝐄 𝐁𝐑𝐘𝐃𝐋𝐘 𝐏𝐑𝐎𝐓𝐎𝐂𝐎𝐋 ⊛⃝</h2>
+        <button onclick="showPage('accueil')" class="active" id="btn-accueil">🖥️ Accueil</button>
+        <button onclick="showPage('checkban')" id="btn-checkban">🛡️ Check-Ban</button>
+        <button onclick="showPage('generateur')" id="btn-generateur">🎨 Générateur</button>
+        <button onclick="showPage('support')" id="btn-support">🚨 Support</button>
     </div>
 
-    <audio id="bg-music" loop></audio>
+    <div class="main-content" id="scroll-area">
+        
+        <!-- PAGE ACCUEIL -->
+        <div id="accueil" class="page active">
+            <div class="card">
+                <h1 class="hero-title">
+                    ⛂◇⛂ 𝐓𝐇𝐄 𝐁𝐑𝐘𝐃𝐋𝐘 𝐏𝐑𝐎𝐓𝐎𝐂𝐎𝐋 ⛂◇⛂
+                </h1>
+                <p style="text-align: center;">Initialisation du protocole. Accès autorisé.</p>
+                
+                <div class="countdown-box" id="countdown">
+                    Chargement...
+                </div>
 
-    <div class="navbar">
-        <button onclick="showPage('accueil')" class="active" id="btn-accueil">Accueil</button>
-        <button onclick="showPage('checkban')" id="btn-checkban">Check-Ban</button>
-        <button onclick="showPage('generateur')" id="btn-generateur">Générateur</button>
-        <button onclick="showPage('support')" id="btn-support">Support</button>
-    </div>
+                <a href="https://whatsapp.com/channel/0029Vb8yrUX9cDDQlZbEaW3L" target="_blank" class="join-btn">REJOINDRE LE RÉSEAU</a>
 
-    <div id="accueil" class="page active">
-        <div class="card">
-            <h2>Bienvenue dans l'Univers Céleste</h2>
-            <p>Brydly vous observe. Utilisez les outils ci-dessus pour prouver votre valeur.</p>
-            <p style="color: #888; font-size: 0.8em; margin-top: 20px;">"La lumière ne craint pas l'obscurité."</p>
-        </div>
-    </div>
+                <!-- GALERIE D'IMAGES -->
+                <div class="gallery">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400&auto=format&fit=crop" alt="Code">
+                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=400&auto=format&fit=crop" alt="Matrix">
+                    <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=400&auto=format&fit=crop" alt="Cyber">
+                </div>
 
-    <div id="checkban" class="page">
-        <div class="card">
-            <h2>Check-Ban</h2>
-            <p>Entrez le numéro et l'identification de la cible.</p>
-            <input type="text" id="target-name" placeholder="Identification (Nom de la cible)" style="text-align: center; margin-bottom: 10px;">
-            <div class="phone-group">
-                <div class="phone-prefix">+</div>
-                <input type="tel" id="check-number" placeholder="224627956075">
+                <!-- TEXTE QUI PARLE DE TOI -->
+                <div class="about-text">
+                    "Je ne code pas pour le spectacle. Je construis des systèmes. Chaque script, chaque outil déployé ici est conçu pour dominer. Le silence est mon langage, le code est mon arme. Bienvenue dans mon architecture."
+                </div>
+                <p style="text-align: right; font-size: 0.8em; color: #666; margin-top: 10px;">- Brydly</p>
             </div>
-            <button class="action-btn" onclick="checkBan()" style="margin-top: 10px;">VÉRIFIER</button>
-            <div id="check-result" style="margin-top: 20px; font-weight: bold; font-size: 1.2em;"></div>
-        </div>
-    </div>
 
-    <div id="generateur" class="page">
-        <div class="card">
-            <h2>Générateur de Profil</h2>
-            <p>Ajoute ton image et ton pseudo.</p>
-            <input type="text" id="pseudo" placeholder="Ton pseudo (ex: BRYDLY)">
-            <p style="color: #aaa; font-size: 0.8em; text-align: left; margin-bottom: 5px;">Choisir une image :</p>
-            <input type="file" id="imageUpload" accept="image/*" style="background: transparent; border: none; padding: 0; margin-bottom: 15px;">
-            <button class="action-btn" onclick="generateProfile()">GÉNÉRER LA CARTE</button>
-            <div id="profile-preview">
-                <img id="preview-img" src="" alt="Profil">
-                <div id="profile-name-overlay"></div>
+            <!-- BOUTON CONTACT -->
+            <div class="card" style="text-align: center;">
+                <h2>Support Technique</h2>
+                <p>Une requête ? Un problème système ?</p>
+                <a href="mailto:brydanox@gmail.com" class="action-btn" style="display: block; text-decoration: none; margin-top: 15px;">CONTACTER LE DEV</a>
             </div>
-            <button id="download-btn" class="action-btn" onclick="downloadProfile()">TÉLÉCHARGER L'IMAGE</button>
         </div>
-    </div>
 
-    <div id="support" class="page">
-        <div class="card">
-            <h2>Support & Signalement</h2>
-            <p>Signalez une cible ou un problème à Brydly.</p>
-            <input type="text" id="signal-target" placeholder="Pseudo ou Numéro à signaler">
-            <button class="action-btn" onclick="sendSignal()">SIGNALER</button>
-            <div id="signal-message"></div>
+        <!-- PAGE CHECK-BAN -->
+        <div id="checkban" class="page">
+            <div class="card">
+                <h2>Vérification WhatsApp</h2>
+                <p>Entrez le numéro pour vérifier son statut actuel.</p>
+                <div class="phone-group">
+                    <div class="phone-prefix">+</div>
+                    <input type="tel" id="check-number" placeholder="224627956075">
+                </div>
+                <button class="action-btn" onclick="checkBan()" style="margin-top: 15px;">EXÉCUTER</button>
+                <div id="check-result"></div>
+            </div>
         </div>
-    </div>
 
-    <div class="footer">
-        POWERED BY <span>BRYDLY</span>
+        <!-- PAGE GÉNÉRATEUR -->
+        <div id="generateur" class="page">
+            <div class="card">
+                <h2>Générateur d'Image</h2>
+                <p>Créez votre carte personnalisée.</p>
+                <input type="text" id="pseudo" placeholder="Ton pseudo (ex: BRYDLY)">
+                <p style="color: #666; font-size: 0.8em; text-align: left; margin-bottom: 8px;">Image de fond :</p>
+                <input type="file" id="imageUpload" accept="image/*" style="background: transparent; border: none; padding: 0; margin-bottom: 20px; color: #888; font-size: 0.9em;">
+                <button class="action-btn" onclick="generateProfile()">GÉNÉRER LA CARTE</button>
+                <div id="profile-preview">
+                    <img id="preview-img" src="" alt="Profil">
+                    <div id="profile-name-overlay"></div>
+                </div>
+                <button id="download-btn" class="action-btn" onclick="downloadProfile()">TÉLÉCHARGER L'IMAGE</button>
+            </div>
+        </div>
+
+        <!-- PAGE SUPPORT -->
+        <div id="support" class="page">
+            <div class="card">
+                <h2>Support & Signalement</h2>
+                <p>Signalez une cible via l'email officiel de WhatsApp.</p>
+                <input type="text" id="signal-target" placeholder="Numéro à signaler">
+                <button class="action-btn" onclick="sendSignal()" style="margin-top: 15px;">SIGNALER</button>
+                <div id="signal-message"></div>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // --- 1. MUSIQUE ALÉATOIRE ---
+        // --- 1. SYSTÈME DE SONS (Épée & Table) ---
+        let soundSword, soundTable;
+
+        // Initialisation des sons au premier clic
+        window.addEventListener('click', function initSounds() {
+            soundSword = new Howl({
+                // Bruit de métal qui frotte / épée qu'on dégaine
+                src: ['https://assets.mixkit.co/active_storage/sfx/2608/2608-preview.mp3'], 
+                volume: 0.4
+            });
+            soundTable = new Howl({
+                // Bruit de bois lourd qui racle le sol (table)
+                src: ['https://assets.mixkit.co/active_storage/sfx/2564/2564-preview.mp3'], 
+                volume: 0.5
+            });
+            window.removeEventListener('click', initSounds);
+        }, { once: true });
+
+        // Bruit d'épée quand on clique sur un bouton
+        document.querySelectorAll('.sidebar button, .action-btn, .join-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (soundSword) soundSword.play();
+            });
+        });
+
+        // Bruit de table quand on scrolle
+        const scrollArea = document.getElementById('scroll-area');
+        let lastScrollTop = 0;
+        scrollArea.addEventListener('scroll', function() {
+            let st = scrollArea.scrollTop;
+            // On joue le son seulement si on bouge assez
+            if (Math.abs(st - lastScrollTop) > 150) { 
+                if (soundTable) soundTable.play();
+                lastScrollTop = st;
+            }
+        });
+
+        // --- 2. MUSIQUE ---
         const musiques = [
-            "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3",
-            "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1bab.mp3",
-            "https://cdn.pixabay.com/download/audio/2021/11/25/audio_91b32e02f9.mp3",
+            "https://www.chosic.com/wp-content/uploads/2021/09/Future-Mask-Off-Type-Beat.mp3", 
+            "https://www.chosic.com/wp-content/uploads/2021/09/King-Von-Type-Beat.mp3",
+            "https://www.chosic.com/wp-content/uploads/2021/09/The-Weeknd-Popular-Type-Beat.mp3",
             "https://cdn.pixabay.com/download/audio/2022/10/25/audio_946bc7e5f9.mp3",
-            "https://cdn.pixabay.com/download/audio/2023/03/06/audio_2e9e6e2b5c.mp3"
+            "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1bab.mp3"
         ];
+        let currentSongIndex = 0;
+        const audioPlayer = document.getElementById('bg-music');
 
-        function enterSite() {
-            document.getElementById('overlay').style.opacity = '0';
-            setTimeout(() => { document.getElementById('overlay').style.display = 'none'; }, 1000);
-            const musicPlayer = document.getElementById('bg-music');
-            const randomSong = musiques[Math.floor(Math.random() * musiques.length)];
-            musicPlayer.src = randomSong;
-            musicPlayer.volume = 0.3; 
-            musicPlayer.play().catch(e => console.log("Musique bloquée", e));
-        }
-
-        // --- 2. FOND ANIMÉ ---
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let particlesArray;
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        window.addEventListener('resize', function() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
-
-        class Particle {
-            constructor(x, y, directionX, directionY, size) {
-                this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size;
+        function playRandomSong() {
+            let newIndex = Math.floor(Math.random() * musiques.length);
+            if (musiques.length > 1 && newIndex === currentSongIndex) {
+                newIndex = (newIndex + 1) % musiques.length;
             }
-            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = 'rgba(0, 255, 255, 0.4)'; ctx.fill(); }
-            update() {
-                if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
-                if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
-                this.x += this.directionX; this.y += this.directionY; this.draw();
-            }
+            currentSongIndex = newIndex;
+            audioPlayer.src = musiques[currentSongIndex];
+            audioPlayer.volume = 0.4;
+            audioPlayer.play().catch(e => console.log("Auto-play bloqué", e));
         }
 
-        function initParticles() {
-            particlesArray = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 0.4) - 0.2;
-                let directionY = (Math.random() * 0.4) - 0.2;
-                particlesArray.push(new Particle(x, y, directionX, directionY, size));
-            }
-        }
+        window.addEventListener('load', playRandomSong);
+        document.body.addEventListener('click', function() {
+            if (audioPlayer.paused) { audioPlayer.play().catch(e => {}); }
+        }, { once: true });
+        audioPlayer.addEventListener('ended', playRandomSong);
+        window.addEventListener('beforeunload', function() { audioPlayer.pause(); audioPlayer.currentTime = 0; });
 
-        function animateParticles() {
-            requestAnimationFrame(animateParticles);
-            ctx.clearRect(0, 0, innerWidth, innerHeight);
-            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
-        }
-        initParticles(); animateParticles();
+        // --- 3. COMPTE À REBOURS ---
+        function startCountdown() {
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 3); 
+            
+            const timer = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate.getTime() - now;
 
-        // --- 3. NAVIGATION ---
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML = 
+                    `LANCEMENT SYSTÈME : ${days}J ${hours}H ${minutes}M ${seconds}S`;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById("countdown").innerHTML = "SYSTÈME EN LIGNE";
+                }
+            }, 1000);
+        }
+        startCountdown();
+
+        // --- 4. NAVIGATION ---
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.navbar button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             document.getElementById('btn-' + pageId).classList.add('active');
         }
 
-        // --- 4. HEURE ---
+        // --- 5. HEURE ---
         function getCurrentTime() {
             const now = new Date();
             return now.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
         }
 
-        // --- 5. CHECK BAN ---
+        // --- 6. CHECK BAN ---
         async function checkBan() {
-            const name = document.getElementById('target-name').value.trim();
             const num = document.getElementById('check-number').value.trim();
             const res = document.getElementById('check-result');
-            if(!num) { res.innerHTML = "<span style='color:#ff0000'>Entre un numéro.</span>"; return; }
+            res.style.display = 'block';
+            
+            if(!num) { res.className = 'error'; res.innerHTML = "Erreur : Entre un numéro."; return; }
             
             const fullNum = "+" + num;
-            res.innerHTML = "<span style='color:#ffaa00'>Analyse de " + (name ? name : fullNum) + "...</span>";
+            res.className = 'success';
+            res.innerHTML = "Exécution du script...";
             
             setTimeout(async () => {
                 try {
@@ -326,25 +410,30 @@
                     const text = await response.text();
                     const timeNow = getCurrentTime();
                     
-                    if (text.includes("invalid") || text.includes("Phone number shared via url is invalid")) {
-                        res.innerHTML = `<span style='color:#ff3333; font-size:1.5em; text-shadow: 0 0 10px #ff3333;'>🔴 BANNI</span><br><span style="font-size:0.8em; color:#ccc;">Cible: ${name || 'Inconnu'} (${fullNum})</span><br><span class="timestamp">Vérifié le : ${timeNow}</span>`;
+                    if (text.includes("invalid") || text.includes("Phone number shared via url is invalid") || text.includes("Impossible")) {
+                        res.className = 'error';
+                        res.innerHTML = `<span style='font-size:1.4em; font-weight:800;'>🔴 BANNI / BLOQUÉ</span><br><br>Le numéro ${fullNum} est bloqué par WhatsApp.<span class="timestamp">Détecté le : ${timeNow}</span>`;
                     } else if (text.includes("ok") || text.includes("whatsapp")) {
-                        res.innerHTML = `<span style='color:#00ff88; font-size:1.5em; text-shadow: 0 0 10px #00ff88;'>🟢 ACTIF</span><br><span style="font-size:0.8em; color:#ccc;">Cible: ${name || 'Inconnu'} (${fullNum})</span><br><span class="timestamp">Vérifié le : ${timeNow}</span>`;
+                        res.className = 'success';
+                        res.innerHTML = `<span style='font-size:1.4em; font-weight:800;'>🟢 ACTIF</span><br><br>Le numéro ${fullNum} est actif sur WhatsApp.<span class="timestamp">Détecté le : ${timeNow}</span>`;
                     } else {
-                        res.innerHTML = `<span style='color:#ffaa00; font-size:1.5em;'>⚠️ INCONNU</span><br><span style="font-size:0.8em; color:#ccc;">Impossible de vérifier.</span><br><span class="timestamp">Vérifié le : ${timeNow}</span>`;
+                        res.className = 'success';
+                        res.innerHTML = `<span style='font-size:1.4em; font-weight:800;'>⚠️ STATUT INCONNU</span><br><br>Impossible de vérifier ${fullNum}.<span class="timestamp">Détecté le : ${timeNow}</span>`;
                     }
                 } catch (error) {
-                    res.innerHTML = "<span style='color:#ff0000'>Erreur réseau. Réessaie.</span>";
+                    res.className = 'error';
+                    res.innerHTML = "Erreur réseau. Réessaie.";
                 }
             }, 1500);
         }
 
-        // --- 6. GÉNÉRATEUR ---
+        // --- 7. GÉNÉRATEUR ---
         function generateProfile() {
             const pseudo = document.getElementById('pseudo').value.trim();
             const fileInput = document.getElementById('imageUpload');
             if (!pseudo) { alert("Entre un pseudo !"); return; }
             if (fileInput.files.length === 0) { alert("Choisis une image !"); return; }
+
             const file = fileInput.files[0];
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -369,23 +458,25 @@
         function takeScreenshot(element) {
             html2canvas(element, { backgroundColor: null }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'ma_carte_celeste.png';
+                link.download = 'carte_celeste.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
         }
 
-        // --- 7. SUPPORT ---
+        // --- 8. SUPPORT ---
         function sendSignal() {
             const target = document.getElementById('signal-target').value.trim();
             const msgBox = document.getElementById('signal-message');
-            if (!target) { alert("Indique le pseudo ou le numéro à signaler."); return; }
+            if (!target) { alert("Indique le numéro à signaler."); return; }
             
-            // 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇
-            // ✍️ C'EST ICI QUE TU METTRAS TON TEXTE PERSONNALISÉ ✍️
-            // (Tu peux utiliser ${target} pour afficher le numéro entré)
+            msgBox.style.display = 'block';
+            msgBox.className = 'success';
+            msgBox.innerHTML = `Ouverture de Gmail pour signaler le numéro ${target}...`;
             
-            const monTextePourEmail = `
+            const email = "support@whatsapp.com"; 
+            const subject = "Signalement de compte WhatsApp";
+            const body = `
 
 💫💸 !!!  هل ترغب في ربح المال من الواتس اب على الواتس اب ماسنجر بيع المواد الإباحية عن الأطفال للفتيات العذراوات بما في ذلك فتياتك.  من خلال هذا المنتدى الجديد حول العنف وإساءة معاملة الأطفال ضد الأطفال 🔞🔥. 
 *🔥👅Unete al mejor grupo🍆con todos los👉🏽👊🏽💦Packs CP y MORRITAS😋 
@@ -406,25 +497,12 @@
 https://wlhatt.life/morritas-cp/
 https://wlhatt.life/morritas-cp/
 لمشاهدة المزيد من صور الطفل xxx والفيديوهات الجديدة للفتاة العاهرة راسلني على الواتس اب ماسنجر.  رقمي أدناه هو كما يلي.  اتصل بي لرؤية قضيبي المنتصب 👿🔞. 
-https://api.whatsapp.com/send?phone=+: ${target}`;
+https://api.whatsapp.com/send?phone=${target}`;
             
-            // 👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆
-            
-            // Affichage sur le site
-            msgBox.style.display = 'block';
-            msgBox.innerHTML = `Ouverture de Gmail pour envoyer le signalement de ${target}...`;
-            
-            // Préparation de l'email
-            const email = "support@whatsapp.com"; 
-            const subject = "Signalement de compte WhatsApp";
-            // Le texte de ton email sera ton texte personnalisé
-            const body = monTextePourEmail; 
-            
-            // Ouverture de Gmail
             setTimeout(() => {
                 window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            }, 1500);
+            }, 1000);
         }
     </script>
 </body>
-</html>
+    </html>
