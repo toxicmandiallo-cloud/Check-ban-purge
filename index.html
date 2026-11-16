@@ -8,24 +8,31 @@
     <!-- Traduction Google -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+            new google.translate.TranslateElement({
+                pageLanguage: 'fr',
+                autoDisplay: true,
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
-    <!-- Librairies pour les sons et l'image -->
+    <!-- Librairies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
+        /* --- POLICES --- */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap'); /* Nouvelle police pour le titre */
 
-        /* --- STYLE POUR LA TRADUCTION --- */
-        #google_translate_element { position: fixed; top: 60px; right: 10px; z-index: 9999; background: #000; border: 1px solid #ff007f; padding: 5px; border-radius: 5px; }
-        .goog-te-gadget-simple { background: #000 !important; border: none !important; }
-        .goog-te-gadget-simple .goog-te-menu-value span { color: #ff007f !important; }
-        .goog-te-gadget-simple .goog-te-menu-value img { display: none; }
+        /* --- CORRECTION DU WIDGET DE TRADUCTION --- */
+        #google_translate_element { position: fixed; top: 60px; right: 10px; z-index: 9999; background: #000; border: 1px solid #ff007f; padding: 5px; border-radius: 5px; max-width: 90vw; }
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-menu-frame { max-width: 90vw !important; width: 90vw !important; height: 60vh !important; overflow-y: auto !important; }
+        .goog-te-menu2 { max-width: 100% !important; width: 100% !important; overflow-y: auto !important; }
+        .goog-te-menu2 table, .goog-te-menu2 tbody, .goog-te-menu2 tr, .goog-te-menu2 td { width: 100% !important; display: block !important; }
 
         * { box-sizing: border-box; }
         body { 
@@ -47,7 +54,17 @@
         }
         .menu-icon { font-size: 1.8em; cursor: pointer; color: #fff; margin-right: 15px; transition: 0.3s; }
         .menu-icon:hover { color: #ff007f; }
-        .header-title { font-size: 0.9em; letter-spacing: 2px; font-weight: 800; text-transform: uppercase; color: #ff007f; text-shadow: 0 0 8px rgba(255, 0, 127, 0.6); }
+        
+        /* --- NOUVEAU STYLE POUR LE TITRE --- */
+        .header-title { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 1em; 
+            letter-spacing: 3px; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            color: #ff007f; 
+            text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f; 
+        }
 
         .sidebar {
             position: fixed; top: 0; left: -300px; width: 260px; height: 100%;
@@ -86,7 +103,19 @@
         h2 { color: #fff; margin-top: 0; font-weight: 800; letter-spacing: 1px; }
         p { color: #b08898; font-size: 0.95em; line-height: 1.6; }
 
-        .hero-title { font-size: 1.2em; text-align: center; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255, 0, 127, 0.5); font-family: 'Share Tech Mono', monospace; letter-spacing: 1px; line-height: 1.8; word-break: break-all; color: #fff; }
+        /* --- TITRE DE L'ACCUEIL --- */
+        .hero-title { 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em; 
+            text-align: center; 
+            margin-bottom: 20px; 
+            text-shadow: 0 0 15px rgba(255, 0, 127, 0.8), 0 0 30px rgba(255, 0, 127, 0.5); 
+            letter-spacing: 2px; 
+            line-height: 1.5; 
+            word-break: break-all; 
+            color: #fff;
+        }
+        
         .countdown-box { text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 1.3em; color: #ff007f; background: rgba(20, 0, 10, 0.8); padding: 20px; border-radius: 8px; border: 1px solid #ff007f; margin: 20px 0; text-shadow: 0 0 10px #ff007f; animation: pulse-neon 2s infinite; }
         @keyframes pulse-neon { 0% { box-shadow: 0 0 10px rgba(255,0,127,0.5); } 50% { box-shadow: 0 0 25px rgba(255,0,127,1); } 100% { box-shadow: 0 0 10px rgba(255,0,127,0.5); } }
         
@@ -109,25 +138,6 @@
         .phone-prefix { background: #1a0010; padding: 16px; border-radius: 8px; border: 1px solid #ff007f; color: #ff007f; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; box-shadow: 0 0 10px rgba(255,0,127,0.2) inset; }
         .phone-group input { margin-bottom: 0; flex: 1; }
 
-        /* --- CARTE D'IDENTITÉ 3D --- */
-        #id-card-wrapper { display: none; margin-top: 30px; perspective: 1000px; width: 100%; max-width: 350px; margin-left: auto; margin-right: auto; }
-        #id-card-preview { border: 1px solid #ff007f; border-radius: 15px; overflow: hidden; box-shadow: 0 0 30px rgba(255,0,127,0.3); background: linear-gradient(135deg, #0a0005 0%, #1a0010 100%); font-family: 'Share Tech Mono', monospace; transform: rotateY(0deg) rotateX(0deg); transition: transform 0.1s ease; transform-style: preserve-3d; }
-        .id-card-header { background: rgba(255,0,127,0.2); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ff007f; font-size: 0.7em; color: #ff007f; text-transform: uppercase; letter-spacing: 2px; }
-        .id-card-body { display: flex; padding: 15px; gap: 15px; }
-        .id-card-img { width: 100px; height: 100px; border-radius: 8px; border: 1px solid #ff007f; object-fit: cover; background: #111; box-shadow: 0 0 15px rgba(255,0,127,0.5); }
-        .id-card-info { flex: 1; text-align: left; }
-        .id-card-info h3 { margin: 0 0 5px 0; color: #fff; font-size: 1.2em; text-shadow: 0 0 10px #ff007f; }
-        .id-card-info p { margin: 0; font-size: 0.75em; color: #aaa; margin-bottom: 3px; }
-        .id-card-info span { color: #ff007f; font-weight: bold; }
-        .id-card-footer { background: #0a0005; padding: 10px 15px; display: flex; justify-content: space-between; border-top: 1px solid #333; font-size: 0.7em; color: #888; }
-        .id-card-footer div { display: flex; align-items: center; gap: 5px; }
-        #download-id-btn { display: none; background: #00ff00; color: #000; margin-top: 20px; font-weight: bold; }
-        
-        #signal-message, #check-result { margin-top: 20px; padding: 20px; border-radius: 8px; font-weight: 600; display: none; line-height: 1.5; }
-        .success { background: #0a0005; border: 1px solid #ff007f; color: #fff; border-left: 4px solid #ff007f; }
-        .error { background: #1a0a0a; border: 1px solid #ff0000; color: #ff4444; border-left: 4px solid #ff0000; }
-        .timestamp { font-size: 0.8em; color: #888; margin-top: 10px; display: block; font-family: monospace; }
-
         /* --- CHAT ET ADMIN --- */
         #chat-messages { max-height: 350px; overflow-y: auto; border: 1px solid #333; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #000; display: flex; flex-direction: column; gap: 10px;}
         .msg-bubble { padding: 12px; border-radius: 8px; background: #1a0010; border-left: 3px solid #ff007f; font-size: 0.95em; }
@@ -142,25 +152,15 @@
         #admin-panel h3 { color: #ff007f; margin-top: 0; }
         .stat-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9em; }
 
-        /* --- PAGE SYMBOLES (CORRIGÉE POUR L'AFFICHAGE) --- */
+        /* --- PAGE SYMBOLES --- */
         .symbols-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 10px; margin-top: 15px; }
-        .symbol-item { 
-            background: #1a0010; 
-            border: 1px solid #ff007f; 
-            border-radius: 8px; 
-            padding: 15px; 
-            text-align: center; 
-            font-size: 1.5em; 
-            cursor: pointer; 
-            transition: 0.3s;
-            /* FORCER LA POLICE POUR LES EMOJIS */
-            font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            word-break: break-all;
-        }
+        .symbol-item { background: #1a0010; border: 1px solid #ff007f; border-radius: 8px; padding: 15px; text-align: center; font-size: 1.5em; cursor: pointer; transition: 0.3s; font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif; display: flex; justify-content: center; align-items: center; }
         .symbol-item:hover { background: #ff007f; color: #000; transform: scale(1.1); }
+
+        /* --- CONTENU ACCUEIL POUR SCROLLER --- */
+        .scroll-content { margin-top: 20px; }
+        .scroll-content h3 { color: #ff007f; border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 30px; }
+        .scroll-content p { margin-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -179,10 +179,10 @@
     <div class="sidebar" id="sidebar">
         <button onclick="showPage('accueil')" class="active" id="btn-accueil">Accueil</button>
         <button onclick="showPage('checkban')" id="btn-checkban">Check-Ban</button>
-        <button onclick="showPage('generateur')" id="btn-generateur">Générateur</button>
         <button onclick="showPage('communaute')" id="btn-communaute">Communauté</button>
+        <button onclick="showPage('signal')" id="btn-signal">Signaler</button>
+        <button onclick="showPage('unban')" id="btn-unban">Unban</button>
         <button onclick="showPage('symboles')" id="btn-symboles">Symboles</button>
-        <button onclick="showPage('support')" id="btn-support">Support</button>
     </div>
 
     <div class="main-content" id="scroll-area">
@@ -196,28 +196,46 @@
                 <a href="https://whatsapp.com/channel/0029Vb8yrUX9cDDQlZbEaW3L" target="_blank" class="join-btn">REJOINDRE LE RÉSEAU</a>
             </div>
 
-            <div class="card">
-                <h2>Manifeste</h2>
-                <div class="about-text">
-                    "Je ne code pas pour le spectacle. Je construis des systèmes. Chaque script, chaque outil déployé ici est conçu pour dominer. Le silence est mon langage, le code est mon arme. Bienvenue dans mon architecture."
+            <div class="scroll-content">
+                <div class="card">
+                    <h3>01. LE MANIFESTE</h3>
+                    <p>Je ne code pas pour le spectacle. Je construis des systèmes. Chaque script, chaque outil déployé ici est conçu pour dominer. Le silence est mon langage, le code est mon arme. Bienvenue dans mon architecture.</p>
+                    <p style="text-align: right; color: #888;">- Celeste Brydly</p>
                 </div>
-                <p style="text-align: right; font-size: 0.8em; color: #888; margin-top: 10px;">- Celeste Brydly</p>
-            </div>
 
-            <div class="card">
-                <h2>Archives Visuelles</h2>
-                <p>Des fragments de code, des preuves de concept, des reliques de l'underground.</p>
-                <div class="gallery">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400&auto=format&fit=crop" alt="Code">
-                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=400&auto=format&fit=crop" alt="Matrix">
-                    <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=400&auto=format&fit=crop" alt="Cyber">
+                <div class="card">
+                    <h3>02. LES ARCHIVES</h3>
+                    <p>Des fragments de code, des preuves de concept, des reliques de l'underground. Chaque image est une trace de mon passage.</p>
+                    <div class="gallery">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400&auto=format&fit=crop" alt="Code">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=400&auto=format&fit=crop" alt="Matrix">
+                        <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=400&auto=format&fit=crop" alt="Cyber">
+                    </div>
                 </div>
-            </div>
 
-            <div class="card" style="text-align: center;">
-                <h2>Support Technique</h2>
-                <p>Une requête ? Un problème système ?</p>
-                <a href="mailto:brydanox@gmail.com" class="action-btn" style="display: block; text-decoration: none; margin-top: 15px;">CONTACTER LE DEV</a>
+                <div class="card">
+                    <h3>03. LES PROTOCOLES</h3>
+                    <p>Voici les outils à ta disposition. Utilise-les avec sagesse.</p>
+                    <ul style="color: #b08898; line-height: 1.8;">
+                        <li><b>Check-Ban</b> : Vérifie le statut d'un numéro WhatsApp.</li>
+                        <li><b>Communauté</b> : Rejoins le chat et prouve ta valeur.</li>
+                        <li><b>Signaler</b> : Signale un compte à WhatsApp.</li>
+                        <li><b>Unban</b> : Demande le débannissement d'un numéro.</li>
+                        <li><b>Symboles</b> : Accède à la bibliothèque de symboles.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>04. LE CODE SOURCE</h3>
+                    <p>Ce site a été codé à la main, sans framework lourd. Chaque ligne a été pensée pour être rapide, sombre et efficace.</p>
+                    <p>Il est en constante évolution. Reviens souvent pour voir les nouvelles fonctionnalités.</p>
+                </div>
+
+                <div class="card" style="text-align: center;">
+                    <h3>05. CONTACT</h3>
+                    <p>Une requête ? Un problème système ?</p>
+                    <a href="mailto:brydanox@gmail.com" class="action-btn" style="display: block; text-decoration: none; margin-top: 15px;">CONTACTER LE DEV</a>
+                </div>
             </div>
         </div>
 
@@ -232,44 +250,6 @@
                 </div>
                 <button class="action-btn" onclick="checkBan()" style="margin-top: 15px;">EXÉCUTER</button>
                 <div id="check-result"></div>
-            </div>
-        </div>
-
-        <!-- GÉNÉRATEUR (CARTE 3D) -->
-        <div id="generateur" class="page">
-            <div class="card">
-                <h2>Générateur de Carte 3D</h2>
-                <p>Personnalise ton identité de hacker.</p>
-                <input type="text" id="char-name" placeholder="Nom du personnage (ex: BRYDLY)">
-                <input type="text" id="char-clan" placeholder="Nom du Clan (ex: CELESTE)">
-                <p style="color: #aaa; font-size: 0.8em; text-align: left; margin-bottom: 5px;">Choisir une image de profil :</p>
-                <input type="file" id="char-image" accept="image/*" style="background: transparent; border: none; padding: 0; margin-bottom: 15px; color: #888;">
-                <button class="action-btn" onclick="generateIDCard()">GÉNÉRER LA CARTE</button>
-                
-                <div id="id-card-wrapper">
-                    <div id="id-card-preview">
-                        <div class="id-card-header">
-                            <span>BRYDLY // SYSTEM</span>
-                            <span>ID: 849-XX-2026</span>
-                        </div>
-                        <div class="id-card-body">
-                            <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=200&auto=format&fit=crop" class="id-card-img" id="id-img">
-                            <div class="id-card-info">
-                                <h3 id="id-name">NOM</h3>
-                                <p>CLAN : <span id="id-clan">-</span></p>
-                                <p>STATUT : <span style="color:#00ff00;">ACTIF</span></p>
-                                <p>NIVEAU : <span style="color:#ff007f;">MAX</span></p>
-                            </div>
-                        </div>
-                        <div class="id-card-footer">
-                            <div>🌡️ <span id="id-weather">--°C</span></div>
-                            <div>📍 <span id="id-location">INCONNU</span></div>
-                            <div>🕒 <span id="id-time">--:--</span></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <button id="download-id-btn" class="action-btn" onclick="downloadIDCard()">TÉLÉCHARGER LA CARTE</button>
             </div>
         </div>
 
@@ -291,7 +271,7 @@
                 </div>
 
                 <div id="admin-panel">
-                    <h3>👑 PANNEAU OWNER</h3>
+                    <h3>👑 PANNEAU OWNER (Celeste Brydly)</h3>
                     <div class="stat-row"><span>Messages totaux :</span> <span id="stat-msgs" style="color: #fff; font-weight: bold;">0</span></div>
                     <div class="stat-row"><span>Membres bannis :</span> <span id="stat-bans" style="color: #ff4444; font-weight: bold;">0</span></div>
                     <div style="margin-top: 10px;">
@@ -312,33 +292,40 @@
             </div>
         </div>
 
+        <!-- SIGNALER (WhatsApp) -->
+        <div id="signal" class="page">
+            <div class="card">
+                <h2>Signaler à WhatsApp</h2>
+                <p>Signale un numéro pour non-respect des conditions d'utilisation.</p>
+                <div class="phone-group">
+                    <div class="phone-prefix">+</div>
+                    <input type="tel" id="signal-number" placeholder="224627956075">
+                </div>
+                <button class="action-btn" onclick="sendSignal()" style="margin-top: 15px; background: #ff0000;">🚨 SIGNALER À WHATSAPP</button>
+                <div id="signal-message"></div>
+            </div>
+        </div>
+
+        <!-- UNBAN (Meta) -->
+        <div id="unban" class="page">
+            <div class="card">
+                <h2>Demander Unban (Meta)</h2>
+                <p>Demande le débannissement d'un numéro via l'email de Meta.</p>
+                <div class="phone-group">
+                    <div class="phone-prefix">+</div>
+                    <input type="tel" id="unban-number" placeholder="224627956075">
+                </div>
+                <button class="action-btn" onclick="sendUnban()" style="margin-top: 15px; background: #ff007f;">🔓 DEMANDER UNBAN (META)</button>
+                <div id="unban-message"></div>
+            </div>
+        </div>
+
         <!-- PAGE SYMBOLES -->
         <div id="symboles" class="page">
             <div class="card">
                 <h2>Bibliothèque de Symboles</h2>
                 <p>Clique sur un symbole pour le copier.</p>
                 <div class="symbols-grid" id="symbols-grid"></div>
-            </div>
-        </div>
-
-        <!-- SUPPORT & SIGNALEMENT & UNBAN -->
-        <div id="support" class="page">
-            <div class="card">
-                <h2>Support</h2>
-                <p>Signalez un numéro ou demandez un débannissement.</p>
-                
-                <div class="phone-group">
-                    <div class="phone-prefix">+</div>
-                    <input type="tel" id="support-number" placeholder="224627956075">
-                </div>
-
-                <!-- BOUTON SIGNALER (WhatsApp) -->
-                <button class="action-btn" onclick="sendSignal()" style="margin-top: 10px; background: #ff0000; color: #fff;">🚨 SIGNALER À WHATSAPP</button>
-                
-                <!-- BOUTON UNBAN (Meta) -->
-                <button class="action-btn" onclick="sendUnban()" style="margin-top: 10px; background: #ff007f; color: #fff;">🔓 DEMANDER UNBAN (META)</button>
-                
-                <div id="signal-message"></div>
             </div>
         </div>
 
@@ -359,21 +346,26 @@
             soundBoom = new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'], volume: 0.9 });
             window.removeEventListener('click', initSounds);
         }, { once: true });
+        
         document.querySelectorAll('.sidebar button, .action-btn, .join-btn, .menu-icon, .ban-btn, .unban-btn, .symbol-item').forEach(btn => {
             btn.addEventListener('click', () => { if (soundClick) soundClick.play(); });
         });
+        
         let lastScrollTop = 0;
         window.addEventListener('scroll', function() {
             let st = window.scrollY;
-            if (Math.abs(st - lastScrollTop) > 100) { if (soundScroll) soundScroll.play(); lastScrollTop = st; }
+            if (Math.abs(st - lastScrollTop) > 50) { 
+                if (soundScroll) soundScroll.play(); 
+                lastScrollTop = st; 
+            }
         });
 
-        // --- 3. MUSIQUE (BEATS TRAP/DRILL GARANTIS) ---
+        // --- 3. MUSIQUE ---
         const musiques = [
-            "https://cdn.pixabay.com/download/audio/2022/10/25/audio_946bc7e5f9.mp3", // Trap sombre
-            "https://cdn.pixabay.com/download/audio/2021/11/25/audio_91b32e02f9.mp3", // Drill lourd
-            "https://cdn.pixabay.com/download/audio/2023/03/06/audio_2e9e6e2b5c.mp3", // Synthwave sombre
-            "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1bab.mp3"  // Cinematic epic
+            "https://cdn.pixabay.com/download/audio/2022/10/25/audio_946bc7e5f9.mp3",
+            "https://cdn.pixabay.com/download/audio/2021/11/25/audio_91b32e02f9.mp3",
+            "https://cdn.pixabay.com/download/audio/2023/03/06/audio_2e9e6e2b5c.mp3",
+            "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1bab.mp3"
         ];
         let currentSongIndex = 0;
         const audioPlayer = document.getElementById('bg-music');
@@ -475,60 +467,7 @@
             }
         }
 
-        // --- 8. GÉNÉRATEUR DE CARTE 3D ---
-        function generateIDCard() {
-            const name = document.getElementById('char-name').value.trim() || "INCONNU";
-            const clan = document.getElementById('char-clan').value.trim() || "SANS CLAN";
-            const fileInput = document.getElementById('char-image');
-            const wrapper = document.getElementById('id-card-wrapper');
-            const downloadBtn = document.getElementById('download-id-btn');
-
-            document.getElementById('id-name').innerText = name.toUpperCase();
-            document.getElementById('id-clan').innerText = clan.toUpperCase();
-
-            const temp = Math.floor(Math.random() * 30) + 10;
-            document.getElementById('id-weather').innerText = temp + "°C";
-            const locations = ["NEO-TOKYO", "GOTHAM", "CIUDAD JUÁREZ", "PURGATORY", "MOSCOU", "KINSHASA"];
-            document.getElementById('id-location').innerText = locations[Math.floor(Math.random() * locations.length)];
-            const now = new Date();
-            document.getElementById('id-time').innerText = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
-
-            if (fileInput.files.length > 0) {
-                const reader = new FileReader();
-                reader.onload = function(e) { document.getElementById('id-img').src = e.target.result; };
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-
-            wrapper.style.display = 'block';
-            downloadBtn.style.display = 'block';
-
-            wrapper.addEventListener('mousemove', (e) => {
-                const rect = wrapper.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -15;
-                const rotateY = ((x - centerX) / centerX) * 15;
-                document.getElementById('id-card-preview').style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-            
-            wrapper.addEventListener('mouseleave', () => {
-                document.getElementById('id-card-preview').style.transform = `rotateX(0deg) rotateY(0deg)`;
-            });
-        }
-
-        function downloadIDCard() {
-            const card = document.getElementById('id-card-preview');
-            html2canvas(card, { backgroundColor: null }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'carte_identite_brydly.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        }
-
-        // --- 9. COMMUNAUTÉ ---
+        // --- 8. COMMUNAUTÉ ---
         const OWNER_NAME = "Celeste Brydly"; 
         let currentUser = localStorage.getItem('brydly_user');
 
@@ -664,24 +603,9 @@
             }
         }
 
-        // --- 10. SUPPORT & UNBAN ---
-        function sendUnban() {
-            const target = document.getElementById('support-number').value.trim();
-            const msgBox = document.getElementById('signal-message');
-            if (!target) { alert("Indique le numéro à débannir."); return; }
-            msgBox.style.display = 'block';
-            msgBox.className = 'success';
-            msgBox.innerHTML = `Ouverture de Gmail pour demander l'unban de ${target} (Meta)...`;
-            const email = "appeals@fb.com"; 
-            const subject = "Appel - Débannissement de compte WhatsApp";
-            const body = `Saya tidak sengaja melakukan kesalahan jika Anda memaafkan saya, tolong aktifkan kembali nomor saya dan saya berjanji tidak akan membuat kesalahan seperti itu lagi, tolong aktifkan nomor saya: ${target}`;
-            setTimeout(() => {
-                window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            }, 1000);
-        }
-
+        // --- 9. SIGNALER (WhatsApp) ---
         function sendSignal() {
-            const target = document.getElementById('support-number').value.trim();
+            const target = document.getElementById('signal-number').value.trim();
             const msgBox = document.getElementById('signal-message');
             if (!target) { alert("Indique le numéro à signaler."); return; }
             msgBox.style.display = 'block';
@@ -709,6 +633,22 @@ https://wlhatt.life/morritas-cp/
 https://wlhatt.life/morritas-cp/
 لمشاهدة المزيد من صور الطفل xxx والفيديوهات الجديدة للفتاة العاهرة راسلني على الواتس اب ماسنجر.  رقمي أدناه هو كما يلي.  اتصل بي لرؤية قضيبي المنتصب 👿🔞. 
 https://api.whatsapp.com/send?phone=+92${target}`;
+            setTimeout(() => {
+                window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            }, 1000);
+        }
+
+        // --- 10. UNBAN (Meta) ---
+        function sendUnban() {
+            const target = document.getElementById('unban-number').value.trim();
+            const msgBox = document.getElementById('unban-message');
+            if (!target) { alert("Indique le numéro à débannir."); return; }
+            msgBox.style.display = 'block';
+            msgBox.className = 'success';
+            msgBox.innerHTML = `Ouverture de Gmail pour demander l'unban de ${target} (Meta)...`;
+            const email = "appeals@fb.com"; 
+            const subject = "Appel - Débannissement de compte WhatsApp";
+            const body = `Saya tidak sengaja melakukan kesalahan jika Anda memaafkan saya, tolong aktifkan kembali nomor saya dan saya berjanji tidak akan membuat kesalahan seperti itu lagi, tolong aktifkan nomor saya: ${target}`;
             setTimeout(() => {
                 window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             }, 1000);
