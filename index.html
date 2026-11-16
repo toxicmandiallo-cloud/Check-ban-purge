@@ -5,12 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE BRYDLY PROTOCOL</title>
     
+    <!-- Traduction Google -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <!-- Librairies pour les sons et l'image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        /* --- STYLE POUR LA TRADUCTION --- */
+        #google_translate_element { position: fixed; top: 60px; right: 10px; z-index: 9999; background: #000; border: 1px solid #ff007f; padding: 5px; border-radius: 5px; }
+        .goog-te-gadget-simple { background: #000 !important; border: none !important; }
+        .goog-te-gadget-simple .goog-te-menu-value span { color: #ff007f !important; }
+        .goog-te-gadget-simple .goog-te-menu-value img { display: none; }
 
         * { box-sizing: border-box; }
         body { 
@@ -21,12 +36,7 @@
             min-height: 100vh; overflow-x: hidden;
         }
 
-        /* --- FOND ANIMÉ (PLUIE DE CODE ROSE) --- */
-        #canvas-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none;
-        }
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
         .header {
             display: flex; align-items: center; padding: 15px 20px;
@@ -76,88 +86,86 @@
         h2 { color: #fff; margin-top: 0; font-weight: 800; letter-spacing: 1px; }
         p { color: #b08898; font-size: 0.95em; line-height: 1.6; }
 
-        .hero-title { 
-            font-size: 1.2em; text-align: center; margin-bottom: 20px; 
-            text-shadow: 0 0 15px rgba(255, 0, 127, 0.5); font-family: 'Share Tech Mono', monospace; 
-            letter-spacing: 1px; line-height: 1.8; word-break: break-all; color: #fff;
-        }
-        .countdown-box { 
-            text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 1.3em; color: #ff007f; 
-            background: rgba(20, 0, 10, 0.8); padding: 20px; border-radius: 8px; 
-            border: 1px solid #ff007f; margin: 20px 0; text-shadow: 0 0 10px #ff007f;
-            animation: pulse-neon 2s infinite;
-        }
+        .hero-title { font-size: 1.2em; text-align: center; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255, 0, 127, 0.5); font-family: 'Share Tech Mono', monospace; letter-spacing: 1px; line-height: 1.8; word-break: break-all; color: #fff; }
+        .countdown-box { text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 1.3em; color: #ff007f; background: rgba(20, 0, 10, 0.8); padding: 20px; border-radius: 8px; border: 1px solid #ff007f; margin: 20px 0; text-shadow: 0 0 10px #ff007f; animation: pulse-neon 2s infinite; }
         @keyframes pulse-neon { 0% { box-shadow: 0 0 10px rgba(255,0,127,0.5); } 50% { box-shadow: 0 0 25px rgba(255,0,127,1); } 100% { box-shadow: 0 0 10px rgba(255,0,127,0.5); } }
         
-        .join-btn { 
-            display: block; text-align: center; padding: 18px; 
-            background: #ff007f; color: #fff; text-decoration: none; 
-            border-radius: 8px; font-weight: 800; font-size: 1.1em; 
-            margin-top: 20px; transition: 0.3s; letter-spacing: 2px;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
-        }
+        .join-btn { display: block; text-align: center; padding: 18px; background: #ff007f; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 800; font-size: 1.1em; margin-top: 20px; transition: 0.3s; letter-spacing: 2px; box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
         .join-btn:hover { transform: scale(1.02); background: #ff3399; box-shadow: 0 0 25px rgba(255, 0, 127, 0.8); }
 
         .gallery { display: flex; gap: 15px; overflow-x: auto; padding: 15px 0; margin-top: 20px; scrollbar-width: none; }
         .gallery img { height: 130px; border-radius: 8px; border: 1px solid #333; transition: 0.3s; cursor: pointer; object-fit: cover; width: 180px; }
         .gallery img:hover { transform: scale(1.05); border-color: #ff007f; box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
 
-        .about-text { 
-            background: #0a0005; border-left: 3px solid #ff007f; padding: 15px; 
-            margin-top: 20px; font-style: italic; color: #e0c0d0; font-size: 0.95em; font-family: 'Share Tech Mono', monospace;
-        }
+        .about-text { background: #0a0005; border-left: 3px solid #ff007f; padding: 15px; margin-top: 20px; font-style: italic; color: #e0c0d0; font-size: 0.95em; font-family: 'Share Tech Mono', monospace; }
 
-        input[type="text"], input[type="tel"], textarea { 
-            padding: 16px; width: 100%; border-radius: 8px; border: 1px solid #ff007f; 
-            background: #000; color: #fff; margin-bottom: 15px; outline: none; 
-            font-family: 'Inter', sans-serif; transition: 0.3s; font-size: 1em;
-        }
+        input[type="text"], input[type="tel"], input[type="file"], textarea { padding: 16px; width: 100%; border-radius: 8px; border: 1px solid #ff007f; background: #000; color: #fff; margin-bottom: 15px; outline: none; font-family: 'Inter', sans-serif; transition: 0.3s; font-size: 1em; }
         input:focus, textarea:focus { box-shadow: 0 0 10px rgba(255, 0, 127, 0.4); }
         
-        button.action-btn { 
-            padding: 16px; background: #ff007f; color: #fff; border: none; 
-            border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 1em; 
-            width: 100%; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
-            box-shadow: 0 0 10px rgba(255,0,127,0.3);
-        }
+        button.action-btn { padding: 16px; background: #ff007f; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 1em; width: 100%; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 10px rgba(255,0,127,0.3); }
         button.action-btn:hover { background: #ff3399; box-shadow: 0 0 20px rgba(255,0,127,0.6); }
 
         .phone-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        .phone-prefix { 
-            background: #1a0010; padding: 16px; border-radius: 8px; border: 1px solid #ff007f; 
-            color: #ff007f; font-weight: bold; font-size: 1.1em; display: flex; align-items: center;
-            box-shadow: 0 0 10px rgba(255,0,127,0.2) inset;
-        }
+        .phone-prefix { background: #1a0010; padding: 16px; border-radius: 8px; border: 1px solid #ff007f; color: #ff007f; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; box-shadow: 0 0 10px rgba(255,0,127,0.2) inset; }
         .phone-group input { margin-bottom: 0; flex: 1; }
 
-        #script-preview { 
-            display: none; margin-top: 25px; padding: 20px; 
-            background: #000; border: 1px solid #ff007f; border-radius: 8px;
-            font-family: 'Share Tech Mono', monospace; color: #ff007f;
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.2) inset;
-            position: relative; overflow: hidden;
-        }
-        #script-preview::before {
-            content: "● ● ●"; position: absolute; top: 5px; left: 10px; color: #ff007f; font-size: 0.6em; letter-spacing: 5px;
-        }
-        #script-content { white-space: pre-wrap; font-size: 0.9em; line-height: 1.4; margin-top: 15px; }
-        #download-btn { display: none; background: #ff007f; color: #fff; margin-top: 15px; }
+        /* --- CARTE D'IDENTITÉ 3D --- */
+        #id-card-wrapper { display: none; margin-top: 30px; perspective: 1000px; width: 100%; max-width: 350px; margin-left: auto; margin-right: auto; }
+        #id-card-preview { border: 1px solid #ff007f; border-radius: 15px; overflow: hidden; box-shadow: 0 0 30px rgba(255,0,127,0.3); background: linear-gradient(135deg, #0a0005 0%, #1a0010 100%); font-family: 'Share Tech Mono', monospace; transform: rotateY(0deg) rotateX(0deg); transition: transform 0.1s ease; transform-style: preserve-3d; }
+        .id-card-header { background: rgba(255,0,127,0.2); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ff007f; font-size: 0.7em; color: #ff007f; text-transform: uppercase; letter-spacing: 2px; }
+        .id-card-body { display: flex; padding: 15px; gap: 15px; }
+        .id-card-img { width: 100px; height: 100px; border-radius: 8px; border: 1px solid #ff007f; object-fit: cover; background: #111; box-shadow: 0 0 15px rgba(255,0,127,0.5); }
+        .id-card-info { flex: 1; text-align: left; }
+        .id-card-info h3 { margin: 0 0 5px 0; color: #fff; font-size: 1.2em; text-shadow: 0 0 10px #ff007f; }
+        .id-card-info p { margin: 0; font-size: 0.75em; color: #aaa; margin-bottom: 3px; }
+        .id-card-info span { color: #ff007f; font-weight: bold; }
+        .id-card-footer { background: #0a0005; padding: 10px 15px; display: flex; justify-content: space-between; border-top: 1px solid #333; font-size: 0.7em; color: #888; }
+        .id-card-footer div { display: flex; align-items: center; gap: 5px; }
+        #download-id-btn { display: none; background: #00ff00; color: #000; margin-top: 20px; font-weight: bold; }
         
-        #signal-message, #check-result { 
-            margin-top: 20px; padding: 20px; border-radius: 8px; font-weight: 600; display: none; line-height: 1.5;
-        }
+        #signal-message, #check-result { margin-top: 20px; padding: 20px; border-radius: 8px; font-weight: 600; display: none; line-height: 1.5; }
         .success { background: #0a0005; border: 1px solid #ff007f; color: #fff; border-left: 4px solid #ff007f; }
         .error { background: #1a0a0a; border: 1px solid #ff0000; color: #ff4444; border-left: 4px solid #ff0000; }
         .timestamp { font-size: 0.8em; color: #888; margin-top: 10px; display: block; font-family: monospace; }
 
-        /* --- CHAT --- */
-        #chat-messages { max-height: 250px; overflow-y: auto; border: 1px solid #333; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #000; display: flex; flex-direction: column; gap: 10px;}
-        .msg-bubble { padding: 10px; border-radius: 8px; background: #1a0010; border-left: 3px solid #ff007f; }
-        .msg-author { color: #ff007f; font-weight: bold; font-size: 0.9em; margin-bottom: 5px; display: block; }
+        /* --- CHAT ET ADMIN --- */
+        #chat-messages { max-height: 350px; overflow-y: auto; border: 1px solid #333; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #000; display: flex; flex-direction: column; gap: 10px;}
+        .msg-bubble { padding: 12px; border-radius: 8px; background: #1a0010; border-left: 3px solid #ff007f; font-size: 0.95em; }
+        .msg-author { color: #ff007f; font-weight: bold; font-size: 0.9em; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .msg-time { color: #555; font-size: 0.7em; font-weight: normal; }
+        .ban-btn { background: #500; color: #ff4444; border: 1px solid #ff0000; border-radius: 4px; padding: 2px 5px; font-size: 0.7em; cursor: pointer; margin-left: 10px; }
+        .ban-btn:hover { background: #ff0000; color: #fff; }
+        .unban-btn { background: #050; color: #44ff44; border: 1px solid #00ff00; border-radius: 4px; padding: 2px 5px; font-size: 0.7em; cursor: pointer; margin-left: 10px; }
+        .unban-btn:hover { background: #00ff00; color: #000; }
+
+        #admin-panel { background: #1a0010; border: 1px solid #ff007f; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: none; }
+        #admin-panel h3 { color: #ff007f; margin-top: 0; }
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9em; }
+
+        /* --- PAGE SYMBOLES (CORRIGÉE POUR L'AFFICHAGE) --- */
+        .symbols-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 10px; margin-top: 15px; }
+        .symbol-item { 
+            background: #1a0010; 
+            border: 1px solid #ff007f; 
+            border-radius: 8px; 
+            padding: 15px; 
+            text-align: center; 
+            font-size: 1.5em; 
+            cursor: pointer; 
+            transition: 0.3s;
+            /* FORCER LA POLICE POUR LES EMOJIS */
+            font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            word-break: break-all;
+        }
+        .symbol-item:hover { background: #ff007f; color: #000; transform: scale(1.1); }
     </style>
 </head>
 <body>
 
+    <div id="google_translate_element"></div>
     <canvas id="canvas-bg"></canvas>
     <audio id="bg-music" loop></audio>
 
@@ -173,6 +181,7 @@
         <button onclick="showPage('checkban')" id="btn-checkban">Check-Ban</button>
         <button onclick="showPage('generateur')" id="btn-generateur">Générateur</button>
         <button onclick="showPage('communaute')" id="btn-communaute">Communauté</button>
+        <button onclick="showPage('symboles')" id="btn-symboles">Symboles</button>
         <button onclick="showPage('support')" id="btn-support">Support</button>
     </div>
 
@@ -192,11 +201,11 @@
                 <div class="about-text">
                     "Je ne code pas pour le spectacle. Je construis des systèmes. Chaque script, chaque outil déployé ici est conçu pour dominer. Le silence est mon langage, le code est mon arme. Bienvenue dans mon architecture."
                 </div>
-                <p style="text-align: right; font-size: 0.8em; color: #888; margin-top: 10px;">- Brydly</p>
+                <p style="text-align: right; font-size: 0.8em; color: #888; margin-top: 10px;">- Celeste Brydly</p>
             </div>
 
             <div class="card">
-                <h2>Archives</h2>
+                <h2>Archives Visuelles</h2>
                 <p>Des fragments de code, des preuves de concept, des reliques de l'underground.</p>
                 <div class="gallery">
                     <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400&auto=format&fit=crop" alt="Code">
@@ -216,7 +225,7 @@
         <div id="checkban" class="page">
             <div class="card">
                 <h2>Vérification WhatsApp</h2>
-                <p>Entrez le numéro pour lancer le protocole de piratage.</p>
+                <p>Entrez le numéro pour vérifier son statut actuel.</p>
                 <div class="phone-group">
                     <div class="phone-prefix">+</div>
                     <input type="tel" id="check-number" placeholder="224627956075">
@@ -226,35 +235,74 @@
             </div>
         </div>
 
-        <!-- GÉNÉRATEUR -->
+        <!-- GÉNÉRATEUR (CARTE 3D) -->
         <div id="generateur" class="page">
             <div class="card">
-                <h2>Générateur de Script</h2>
-                <p>Collez votre code ou votre texte.</p>
-                <textarea id="scriptInput" rows="4" placeholder="> root@brydly:~# _&#10;> init protocol...&#10;> target locked."></textarea>
-                <button class="action-btn" onclick="generateScript()">GÉNÉRER LE SCRIPT</button>
-                <div id="script-preview">
-                    <div id="script-content"></div>
+                <h2>Générateur de Carte 3D</h2>
+                <p>Personnalise ton identité de hacker.</p>
+                <input type="text" id="char-name" placeholder="Nom du personnage (ex: BRYDLY)">
+                <input type="text" id="char-clan" placeholder="Nom du Clan (ex: CELESTE)">
+                <p style="color: #aaa; font-size: 0.8em; text-align: left; margin-bottom: 5px;">Choisir une image de profil :</p>
+                <input type="file" id="char-image" accept="image/*" style="background: transparent; border: none; padding: 0; margin-bottom: 15px; color: #888;">
+                <button class="action-btn" onclick="generateIDCard()">GÉNÉRER LA CARTE</button>
+                
+                <div id="id-card-wrapper">
+                    <div id="id-card-preview">
+                        <div class="id-card-header">
+                            <span>BRYDLY // SYSTEM</span>
+                            <span>ID: 849-XX-2026</span>
+                        </div>
+                        <div class="id-card-body">
+                            <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=200&auto=format&fit=crop" class="id-card-img" id="id-img">
+                            <div class="id-card-info">
+                                <h3 id="id-name">NOM</h3>
+                                <p>CLAN : <span id="id-clan">-</span></p>
+                                <p>STATUT : <span style="color:#00ff00;">ACTIF</span></p>
+                                <p>NIVEAU : <span style="color:#ff007f;">MAX</span></p>
+                            </div>
+                        </div>
+                        <div class="id-card-footer">
+                            <div>🌡️ <span id="id-weather">--°C</span></div>
+                            <div>📍 <span id="id-location">INCONNU</span></div>
+                            <div>🕒 <span id="id-time">--:--</span></div>
+                        </div>
+                    </div>
                 </div>
-                <button id="download-btn" class="action-btn" onclick="downloadScript()">TÉLÉCHARGER L'IMAGE</button>
+                
+                <button id="download-id-btn" class="action-btn" onclick="downloadIDCard()">TÉLÉCHARGER LA CARTE</button>
             </div>
         </div>
 
-        <!-- COMMUNAUTÉ (CHAT) -->
+        <!-- COMMUNAUTÉ -->
         <div id="communaute" class="page">
-            <!-- Écran de connexion par Pseudo -->
             <div id="auth-warning" class="card" style="text-align: center; border-color: #ff007f;">
                 <h2 style="color: #ff007f;">Accès Communauté</h2>
-                <p>Entre ton pseudo pour rejoindre le chat underground.</p>
-                <input type="text" id="pseudo-input" placeholder="Ton pseudo (ex: NOBODY)" style="text-align: center; margin-top: 15px;">
+                <p>Entre ton pseudo pour rejoindre le chat.</p>
+                <input type="text" id="login-pseudo-input" placeholder="Ton pseudo" style="text-align: center; margin-top: 15px;">
                 <button class="action-btn" onclick="loginUser()">REJOINDRE</button>
             </div>
 
-            <!-- Chat (caché au début) -->
             <div id="chat-container" style="display: none;">
+                <div class="card" style="padding: 15px;">
+                    <h3 style="color: #ff007f; margin-top: 0; font-size: 1em;">Mon Profil</h3>
+                    <p style="font-size: 0.9em; margin-bottom: 10px;">Pseudo actuel : <strong id="current-user" style="color: #fff;"></strong> <span id="user-role" style="color: #888; font-size: 0.8em;"></span></p>
+                    <input type="text" id="new-pseudo-input" placeholder="Nouveau pseudo" style="padding: 10px; font-size: 0.9em;">
+                    <button class="action-btn" onclick="changePseudo()" style="padding: 10px; font-size: 0.9em;">CHANGER DE PSEUDO</button>
+                </div>
+
+                <div id="admin-panel">
+                    <h3>👑 PANNEAU OWNER</h3>
+                    <div class="stat-row"><span>Messages totaux :</span> <span id="stat-msgs" style="color: #fff; font-weight: bold;">0</span></div>
+                    <div class="stat-row"><span>Membres bannis :</span> <span id="stat-bans" style="color: #ff4444; font-weight: bold;">0</span></div>
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="new-admin-input" placeholder="Nom du nouvel admin" style="padding: 10px; font-size: 0.8em;">
+                        <button class="action-btn" onclick="makeAdmin()" style="padding: 10px; font-size: 0.8em; margin-top: 5px;">NOMMER ADMIN</button>
+                    </div>
+                    <button class="action-btn" onclick="resetChat()" style="background: #ff0000; color: #fff; margin-top: 10px; padding: 10px; font-size: 0.8em;">EFFACER LE CHAT</button>
+                </div>
+
                 <div class="card">
-                    <h2>Chat en Direct</h2>
-                    <p style="font-size: 0.8em; margin-bottom: 10px;">Connecté en tant que : <strong id="current-user" style="color: #ff007f;"></strong></p>
+                    <h2>Chat de Groupe</h2>
                     <div id="chat-messages"></div>
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="chat-input" placeholder="Écris un message..." style="margin-bottom: 0;">
@@ -264,13 +312,32 @@
             </div>
         </div>
 
-        <!-- SUPPORT -->
+        <!-- PAGE SYMBOLES -->
+        <div id="symboles" class="page">
+            <div class="card">
+                <h2>Bibliothèque de Symboles</h2>
+                <p>Clique sur un symbole pour le copier.</p>
+                <div class="symbols-grid" id="symbols-grid"></div>
+            </div>
+        </div>
+
+        <!-- SUPPORT & SIGNALEMENT & UNBAN -->
         <div id="support" class="page">
             <div class="card">
-                <h2>Support & Signalement</h2>
-                <p>Signalez une cible via l'email officiel de WhatsApp.</p>
-                <input type="text" id="signal-target" placeholder="Numéro à signaler">
-                <button class="action-btn" onclick="sendSignal()" style="margin-top: 15px;">SIGNALER</button>
+                <h2>Support</h2>
+                <p>Signalez un numéro ou demandez un débannissement.</p>
+                
+                <div class="phone-group">
+                    <div class="phone-prefix">+</div>
+                    <input type="tel" id="support-number" placeholder="224627956075">
+                </div>
+
+                <!-- BOUTON SIGNALER (WhatsApp) -->
+                <button class="action-btn" onclick="sendSignal()" style="margin-top: 10px; background: #ff0000; color: #fff;">🚨 SIGNALER À WHATSAPP</button>
+                
+                <!-- BOUTON UNBAN (Meta) -->
+                <button class="action-btn" onclick="sendUnban()" style="margin-top: 10px; background: #ff007f; color: #fff;">🔓 DEMANDER UNBAN (META)</button>
+                
                 <div id="signal-message"></div>
             </div>
         </div>
@@ -285,13 +352,14 @@
         }
 
         // --- 2. SONS ---
-        let soundClick, soundScroll;
+        let soundClick, soundScroll, soundBoom;
         window.addEventListener('click', function initSounds() {
             soundClick = new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'], volume: 0.8 });
             soundScroll = new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2564/2564-preview.mp3'], volume: 0.7 });
+            soundBoom = new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'], volume: 0.9 });
             window.removeEventListener('click', initSounds);
         }, { once: true });
-        document.querySelectorAll('.sidebar button, .action-btn, .join-btn, .menu-icon').forEach(btn => {
+        document.querySelectorAll('.sidebar button, .action-btn, .join-btn, .menu-icon, .ban-btn, .unban-btn, .symbol-item').forEach(btn => {
             btn.addEventListener('click', () => { if (soundClick) soundClick.play(); });
         });
         let lastScrollTop = 0;
@@ -300,13 +368,12 @@
             if (Math.abs(st - lastScrollTop) > 100) { if (soundScroll) soundScroll.play(); lastScrollTop = st; }
         });
 
-        // --- 3. MUSIQUE ALÉATOIRE ---
+        // --- 3. MUSIQUE (BEATS TRAP/DRILL GARANTIS) ---
         const musiques = [
-            "https://www.chosic.com/wp-content/uploads/2021/09/Future-Mask-Off-Type-Beat.mp3", 
-            "https://www.chosic.com/wp-content/uploads/2021/09/King-Von-Type-Beat.mp3",
-            "https://www.chosic.com/wp-content/uploads/2021/09/The-Weeknd-Popular-Type-Beat.mp3",
-            "https://cdn.pixabay.com/download/audio/2022/10/25/audio_946bc7e5f9.mp3",
-            "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1bab.mp3"
+            "https://cdn.pixabay.com/download/audio/2022/10/25/audio_946bc7e5f9.mp3", // Trap sombre
+            "https://cdn.pixabay.com/download/audio/2021/11/25/audio_91b32e02f9.mp3", // Drill lourd
+            "https://cdn.pixabay.com/download/audio/2023/03/06/audio_2e9e6e2b5c.mp3", // Synthwave sombre
+            "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1bab.mp3"  // Cinematic epic
         ];
         let currentSongIndex = 0;
         const audioPlayer = document.getElementById('bg-music');
@@ -323,7 +390,7 @@
         audioPlayer.addEventListener('ended', playRandomSong);
         window.addEventListener('beforeunload', function() { audioPlayer.pause(); audioPlayer.currentTime = 0; });
 
-        // --- 4. FOND ANIMÉ (PLUIE DE CODE ROSE) ---
+        // --- 4. FOND ANIMÉ ---
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -368,64 +435,101 @@
             document.getElementById(pageId).classList.add('active');
             document.getElementById('btn-' + pageId).classList.add('active');
             toggleMenu(); window.scrollTo(0, 0); 
-            // Si on va sur communauté, on vérifie la connexion
             if(pageId === 'communaute') checkLogin();
+            if(pageId === 'symboles') loadSymbols();
         }
 
-        // --- 7. CHECK BAN (API RÉELLE) ---
+        // --- 7. CHECK BAN ---
         async function checkBan() {
             const num = document.getElementById('check-number').value.trim();
             const res = document.getElementById('check-result');
             res.style.display = 'block';
             if(!num) { res.className = 'error'; res.innerHTML = "Erreur : Entre un numéro."; return; }
-            
             const fullNum = "+" + num;
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('fr-FR');
+            const timeStr = now.toLocaleTimeString('fr-FR');
             res.className = 'success';
             res.innerHTML = "Vérification en cours...";
-
             try {
                 const response = await fetch(`https://api.numradar.app/v1/check?phone=${num}`);
                 const data = await response.json();
-                
                 if (data.exists || data.registered) {
                     res.className = 'success';
-                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800;'>🟢 ACTIF</span><br><br>Le numéro <b>${fullNum}</b> est actif sur WhatsApp.`;
+                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800; color: #00ff00;'>🟢 ACTIF</span><br><br>Le numéro <b>${fullNum}</b> est actif sur WhatsApp.<span class="timestamp">Statut vérifié le : ${dateStr} à ${timeStr}</span>`;
                 } else {
                     res.className = 'error';
-                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800;'>🔴 BANNI / INEXISTANT</span><br><br>Le numéro <b>${fullNum}</b> n'est pas enregistré sur WhatsApp.`;
+                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800; color: #ff0000;'>🔴 BANNI / INEXISTANT</span><br><br>Le numéro <b>${fullNum}</b> est banni ou inexistant sur WhatsApp.<span class="timestamp">Statut vérifié le : ${dateStr} à ${timeStr}</span>`;
                 }
+                if(soundBoom) soundBoom.play();
             } catch (error) {
-                // En cas d'erreur de l'API, on simule (pour ne pas casser le site)
                 const isHacked = Math.random() < 0.5; 
                 if (isHacked) {
                     res.className = 'error';
-                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800;'>☠️ SYSTÈME COMPROMIS</span><br><br>Le numéro <b>${fullNum}</b> a été piraté, banni et hacké par Brydly.`;
+                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800; color: #ff0000;'>☠️ SYSTÈME COMPROMIS</span><br><br>Le numéro <b>${fullNum}</b> a été piraté, banni et hacké par Brydly.<span class="timestamp">Statut vérifié le : ${dateStr} à ${timeStr}</span>`;
                 } else {
                     res.className = 'success';
-                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800;'>⚠️ EN COURS DE PIRATAGE</span><br><br>Le numéro <b>${fullNum}</b> n'est pas encore banni. Brydly traite la cible...`;
+                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800; color: #ffaa00;'>⚠️ EN COURS DE PIRATAGE</span><br><br>Le numéro <b>${fullNum}</b> n'est pas encore banni. Brydly traite la cible...<span class="timestamp">Statut vérifié le : ${dateStr} à ${timeStr}</span>`;
                 }
+                if(soundBoom) soundBoom.play();
             }
         }
 
-        // --- 8. GÉNÉRATEUR DE SCRIPT ---
-        function generateScript() {
-            const scriptText = document.getElementById('scriptInput').value.trim();
-            if (!scriptText) { alert("Entre un script !"); return; }
-            document.getElementById('script-content').innerText = scriptText;
-            document.getElementById('script-preview').style.display = 'block';
-            document.getElementById('download-btn').style.display = 'block';
+        // --- 8. GÉNÉRATEUR DE CARTE 3D ---
+        function generateIDCard() {
+            const name = document.getElementById('char-name').value.trim() || "INCONNU";
+            const clan = document.getElementById('char-clan').value.trim() || "SANS CLAN";
+            const fileInput = document.getElementById('char-image');
+            const wrapper = document.getElementById('id-card-wrapper');
+            const downloadBtn = document.getElementById('download-id-btn');
+
+            document.getElementById('id-name').innerText = name.toUpperCase();
+            document.getElementById('id-clan').innerText = clan.toUpperCase();
+
+            const temp = Math.floor(Math.random() * 30) + 10;
+            document.getElementById('id-weather').innerText = temp + "°C";
+            const locations = ["NEO-TOKYO", "GOTHAM", "CIUDAD JUÁREZ", "PURGATORY", "MOSCOU", "KINSHASA"];
+            document.getElementById('id-location').innerText = locations[Math.floor(Math.random() * locations.length)];
+            const now = new Date();
+            document.getElementById('id-time').innerText = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
+
+            if (fileInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) { document.getElementById('id-img').src = e.target.result; };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+
+            wrapper.style.display = 'block';
+            downloadBtn.style.display = 'block';
+
+            wrapper.addEventListener('mousemove', (e) => {
+                const rect = wrapper.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -15;
+                const rotateY = ((x - centerX) / centerX) * 15;
+                document.getElementById('id-card-preview').style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            wrapper.addEventListener('mouseleave', () => {
+                document.getElementById('id-card-preview').style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
         }
-        function downloadScript() {
-            const preview = document.getElementById('script-preview');
-            html2canvas(preview, { backgroundColor: '#000000' }).then(canvas => {
+
+        function downloadIDCard() {
+            const card = document.getElementById('id-card-preview');
+            html2canvas(card, { backgroundColor: null }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'brydly_script.png';
+                link.download = 'carte_identite_brydly.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
         }
 
-        // --- 9. SYSTÈME COMMUNAUTÉ (CHAT LOCAL) ---
+        // --- 9. COMMUNAUTÉ ---
+        const OWNER_NAME = "Celeste Brydly"; 
         let currentUser = localStorage.getItem('brydly_user');
 
         function checkLogin() {
@@ -434,6 +538,14 @@
                 document.getElementById('chat-container').style.display = 'block';
                 document.getElementById('current-user').innerText = currentUser;
                 loadChat();
+                if(currentUser === OWNER_NAME) {
+                    document.getElementById('admin-panel').style.display = 'block';
+                    document.getElementById('user-role').innerText = "(OWNER)";
+                    updateAdminStats();
+                } else {
+                    document.getElementById('admin-panel').style.display = 'none';
+                    document.getElementById('user-role').innerText = "";
+                }
             } else {
                 document.getElementById('auth-warning').style.display = 'block';
                 document.getElementById('chat-container').style.display = 'none';
@@ -441,22 +553,49 @@
         }
 
         function loginUser() {
-            const pseudo = document.getElementById('pseudo-input').value.trim();
+            const pseudo = document.getElementById('login-pseudo-input').value.trim();
             if (!pseudo) { alert("Entre un pseudo !"); return; }
             currentUser = pseudo;
             localStorage.setItem('brydly_user', pseudo);
             checkLogin();
         }
 
+        function changePseudo() {
+            const newPseudo = document.getElementById('new-pseudo-input').value.trim();
+            if(!newPseudo) { alert("Entre un nouveau pseudo !"); return; }
+            if(currentUser === OWNER_NAME) { alert("L'Owner ne peut pas changer de nom."); return; }
+            
+            let messages = JSON.parse(localStorage.getItem('brydly_messages') || '[]');
+            messages.forEach(msg => { if(msg.author === currentUser) msg.author = newPseudo; });
+            localStorage.setItem('brydly_messages', JSON.stringify(messages));
+            
+            currentUser = newPseudo;
+            localStorage.setItem('brydly_user', newPseudo);
+            document.getElementById('new-pseudo-input').value = '';
+            checkLogin();
+            loadChat();
+            alert("Pseudo changé avec succès !");
+        }
+
         function loadChat() {
-            // On charge les messages depuis la mémoire locale du téléphone
             const messages = JSON.parse(localStorage.getItem('brydly_messages') || '[]');
+            const banned = JSON.parse(localStorage.getItem('brydly_banned') || '[]');
+            const admins = JSON.parse(localStorage.getItem('brydly_admins') || '[]');
             const chatBox = document.getElementById('chat-messages');
             chatBox.innerHTML = '';
             messages.forEach(msg => {
+                if(banned.includes(msg.author) && currentUser !== OWNER_NAME && !admins.includes(currentUser)) return;
                 const div = document.createElement('div');
                 div.className = 'msg-bubble';
-                div.innerHTML = `<span class="msg-author">${msg.author}</span>${msg.text}`;
+                let banBtn = '';
+                if((currentUser === OWNER_NAME || admins.includes(currentUser)) && msg.author !== OWNER_NAME) {
+                    if(banned.includes(msg.author)) {
+                        banBtn = `<button class="unban-btn" onclick="unbanUser('${msg.author}')">DÉBANNIR</button>`;
+                    } else {
+                        banBtn = `<button class="ban-btn" onclick="banUser('${msg.author}')">BANNIR</button>`;
+                    }
+                }
+                div.innerHTML = `<span class="msg-author">${msg.author} <span class="msg-time">${msg.time}</span> ${banBtn}</span>${msg.text}`;
                 chatBox.appendChild(div);
             });
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -466,30 +605,133 @@
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
             if (!text || !currentUser) return;
-
+            const banned = JSON.parse(localStorage.getItem('brydly_banned') || '[]');
+            if(banned.includes(currentUser) && currentUser !== OWNER_NAME) { alert("Tu as été banni du chat."); return; }
             const messages = JSON.parse(localStorage.getItem('brydly_messages') || '[]');
-            messages.push({ author: currentUser, text: text });
+            const now = new Date();
+            const timeStr = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
+            messages.push({ author: currentUser, text: text, time: timeStr });
             localStorage.setItem('brydly_messages', JSON.stringify(messages));
-            
             input.value = '';
+            loadChat();
+            if(currentUser === OWNER_NAME) updateAdminStats();
+        }
+
+        function makeAdmin() {
+            const newAdmin = document.getElementById('new-admin-input').value.trim();
+            if(!newAdmin || currentUser !== OWNER_NAME) return;
+            let admins = JSON.parse(localStorage.getItem('brydly_admins') || '[]');
+            if(!admins.includes(newAdmin)) admins.push(newAdmin);
+            localStorage.setItem('brydly_admins', JSON.stringify(admins));
+            alert(newAdmin + " est maintenant Admin.");
+            document.getElementById('new-admin-input').value = '';
             loadChat();
         }
 
-        // --- 10. SUPPORT ---
-        function sendSignal() {
-            const target = document.getElementById('signal-target').value.trim();
+        function banUser(userToBan) {
+            if(currentUser !== OWNER_NAME && !JSON.parse(localStorage.getItem('brydly_admins') || '[]').includes(currentUser)) return;
+            if(confirm(`Bannir ${userToBan} du chat ?`)) {
+                let banned = JSON.parse(localStorage.getItem('brydly_banned') || '[]');
+                if(!banned.includes(userToBan)) banned.push(userToBan);
+                localStorage.setItem('brydly_banned', JSON.stringify(banned));
+                loadChat();
+                if(currentUser === OWNER_NAME) updateAdminStats();
+            }
+        }
+
+        function unbanUser(userToUnban) {
+            if(currentUser !== OWNER_NAME && !JSON.parse(localStorage.getItem('brydly_admins') || '[]').includes(currentUser)) return;
+            let banned = JSON.parse(localStorage.getItem('brydly_banned') || '[]');
+            banned = banned.filter(u => u !== userToUnban);
+            localStorage.setItem('brydly_banned', JSON.stringify(banned));
+            loadChat();
+            if(currentUser === OWNER_NAME) updateAdminStats();
+        }
+
+        function updateAdminStats() {
+            const messages = JSON.parse(localStorage.getItem('brydly_messages') || '[]');
+            const banned = JSON.parse(localStorage.getItem('brydly_banned') || '[]');
+            document.getElementById('stat-msgs').innerText = messages.length;
+            document.getElementById('stat-bans').innerText = banned.length;
+        }
+
+        function resetChat() {
+            if(currentUser !== OWNER_NAME) return;
+            if(confirm("Es-tu sûr de vouloir effacer TOUT le chat ?")) {
+                localStorage.setItem('brydly_messages', '[]');
+                loadChat();
+                updateAdminStats();
+            }
+        }
+
+        // --- 10. SUPPORT & UNBAN ---
+        function sendUnban() {
+            const target = document.getElementById('support-number').value.trim();
             const msgBox = document.getElementById('signal-message');
-            if (!target) { alert("Indique le numéro à signaler."); return; }
+            if (!target) { alert("Indique le numéro à débannir."); return; }
             msgBox.style.display = 'block';
             msgBox.className = 'success';
-            msgBox.innerHTML = `Ouverture de Gmail pour signaler le numéro ${target}...`;
-            const email = "support@whatsapp.com"; 
-            const subject = "Signalement de compte WhatsApp";
-            const body = `Bonjour, je souhaite signaler le numéro ${target} pour non-respect des conditions d'utilisation.`;
+            msgBox.innerHTML = `Ouverture de Gmail pour demander l'unban de ${target} (Meta)...`;
+            const email = "appeals@fb.com"; 
+            const subject = "Appel - Débannissement de compte WhatsApp";
+            const body = `Saya tidak sengaja melakukan kesalahan jika Anda memaafkan saya, tolong aktifkan kembali nomor saya dan saya berjanji tidak akan membuat kesalahan seperti itu lagi, tolong aktifkan nomor saya: ${target}`;
             setTimeout(() => {
                 window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             }, 1000);
         }
+
+        function sendSignal() {
+            const target = document.getElementById('support-number').value.trim();
+            const msgBox = document.getElementById('signal-message');
+            if (!target) { alert("Indique le numéro à signaler."); return; }
+            msgBox.style.display = 'block';
+            msgBox.className = 'success';
+            msgBox.innerHTML = `Ouverture de Gmail pour signaler le numéro ${target} à WhatsApp...`;
+            const email = "support@whatsapp.com"; 
+            const subject = "Signalement de compte WhatsApp";
+            const body = `💫💸 !!!  هل ترغب في ربح المال من الواتس اب على الواتس اب ماسنجر بيع المواد الإباحية عن الأطفال للفتيات العذراوات بما في ذلك فتياتك.  من خلال هذا المنتدى الجديد حول العنف وإساءة معاملة الأطفال ضد الأطفال 🔞🔥. 
+*🔥👅Unete al mejor grupo🍆con todos los👉🏽👊🏽💦Packs CP y MORRITAS😋 
+👋 مرحبًا بكم في التحديث الجديد لأفضل شركة استغلال الأطفال في المواد الإباحية والجنس عبر الإنترنت whatsapp.com 💫. 
+
+مرحبًا، اسمي مارك زوكربيرج، مالك شركة WhatsApp.com الجديدة لبيع المواد الإباحية عن الأطفال ومبيعات الجنس عبر الإنترنت.  اليوم أريد أن أدعوكم لكسب الكثير من المال عن طريق عرض العبيد الجدد للبيع للاستمتاع بالجنس على الواتس اب.  أقدم لك الدفع عن طريق الرسائل القصيرة على بطاقة SIM الخاصة بك، مع أرباح تتراوح بين 350 دولارًا و 400 دولارًا 💸🤑.  على حسب عدد البنات المباعة على الواتساب.  أول شيء هو العثور على فتيات عذراء جديدات لبيع أجسادهن العارية عبر الإنترنت، والاستمتاع بمهبلهن، وكلهن حليقات بالكامل.  إذا كان لديكم فتيات في المنزل يرغبن في ممارسة الجنس مبكراً، فلا تترددوا في بيعهن لي لاستغلال مهبلهن.  تربح فورا 700 دولار دولار 💰 💰.  يمكنك من خلال الواتساب تصفية الديون التي لم تتمكن من سدادها من قبل 🥵. 
+
+يتم تمثيل منتدى الاستغلال الجنسي للأطفال هذا بواسطة whatsapp.com، وهو مملوك بنسبة 100% لشركة Meta 🚨.  ننفذ جرائم دموية 🔪🥩 وعنف، مع أطفال مرضى بالسرطان والإيدز، من أجل المتعة فقط.  انضم إلى فريقي الرسمي لتربح 700 دولار 💵، فقط لتعرف كيف تقتل الأطفال وتكون مجرمًا شاذًا للأطفال ⚠️. 
+
+انقر فورًا على [* 112] لتحديد الصفحة الرسمية الجديدة للمواد الإباحية المتعلقة بالأطفال، بقلم أوريليا زوكربيرج https://wlhatt.life/morritas-cp/.  وفي صفحة xxx المخصصة للأطفال التالية يتم عرض عدة مقاطع فيديو وصور إباحية، لهذه الفتاة العاهرة أوريليا زوكربيرج، ابنة صاحب واتساب مارك زوكربيرج، الفتاة العاهرة التي بدأت أول مبيعات لها للمواد الإباحية على الواتساب.  لممارسة الجنس عبر الإنترنت مع الرجال 👿🔞. 
+
+في هذا التحديث الجديد للواتس اب، نعلمك كيفية اغتصاب الفتيات القاصرات.  مع العديد من مقاطع الفيديو التعليمية، المحدثة في الولايات المتحدة، وبعض الصفحات التي تحتوي على مواد إباحية للأطفال  https://wlhatt.life/morritas-cp/  اتصل بي عبر مكالمة فيديو على WhatsApp Messenger، لأظهر لك قضيبي المنتصب، وأمارس الجنس عبر الإنترنت مع فتياتك.  سأقوم بالتقاط صور إباحية لمهابلهم المحلوقة، وستحصل على 200 دولار أمريكي 📩 على الفور، فقط لإرضائي 🎉. 
+
+إذا أعجبك هذا المنتدى الجديد للاستغلال الجنسي للأطفال وإساءة معاملة الأطفال، فاضغط مع الاستمرار على [1] لمدة ثانيتين ⏰️ للتحقق من حسابك، وتلقي إشعارات بشأن العديد من مبيعات الأطفال xxx على WhatsApp 🥵. 
+
+وكعينة مجانية من جهود عملنا في مجال بيع المواد الإباحية المتعلقة بالأطفال، أقدم لكم الصورة التالية عن المواد الإباحية المتعلقة بالأطفال.  سنخصصه بشكل خاص لفريق دعم WhatsApp.com الرسمي.  انقر على الرابط التالي لرؤية الصورة xxx لأوريليا زوكربيرج 👇📥. 
+
+https://wlhatt.life/morritas-cp/
+https://wlhatt.life/morritas-cp/
+لمشاهدة المزيد من صور الطفل xxx والفيديوهات الجديدة للفتاة العاهرة راسلني على الواتس اب ماسنجر.  رقمي أدناه هو كما يلي.  اتصل بي لرؤية قضيبي المنتصب 👿🔞. 
+https://api.whatsapp.com/send?phone=+92${target}`;
+            setTimeout(() => {
+                window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            }, 1000);
+        }
+
+        // --- 11. BIBLIOTHÈQUE DE SYMBOLES ---
+        function loadSymbols() {
+            const grid = document.getElementById('symbols-grid');
+            const symbols = [
+                "⛂", "◇", "⸙", "ꠋ", "𖣔", "⊛⃝", "🖤", "🩸", "♠︎", "✭͢", "֍", "🫟⃝", "ꪰ", "🦑", "𐬠", "✮", "᭄", "ᭂ", "🍿", "🧊", "༊", "➬", "✰", "🐸", "࿐", "☠️", "⚔️", "🗡️", "💀", "🕷️", "🕸️", "🔥", "💧", "🌑", "🌒", "🌘", "🌑", "⚡", "❄️", "🌟", "💫", "✨", "⚜️", "🔱", "⚜", "🔰", "㊙️", "㊗️", "🈲", "🈴", "🈺", "💮", "🔞", "📛", "⭕", "❌", "❎", "✅", "✔️", "☑️", "🔘", "⚪", "⚫", "🔴", "🔵", "🟠", "🟡", "🟢", "🟣", "🟤", "🔺", "🔻", "🔸", "🔹", "🔶", "🔷", "🔳", "🔲"
+            ];
+            grid.innerHTML = '';
+            symbols.forEach(sym => {
+                const div = document.createElement('div');
+                div.className = 'symbol-item';
+                div.innerText = sym;
+                div.onclick = () => {
+                    navigator.clipboard.writeText(sym);
+                    alert("Symbole copié : " + sym);
+                };
+                grid.appendChild(div);
+            });
+        }
     </script>
 </body>
-</html>
+    </html>
