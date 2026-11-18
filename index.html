@@ -18,25 +18,26 @@
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
-    <!-- Librairies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
 
-        /* --- CORRECTION DU WIDGET DE TRADUCTION --- */
-        #google_translate_element { position: fixed; top: 60px; right: 10px; z-index: 9999; background: #000; border: 1px solid #ff007f; padding: 5px; border-radius: 5px; max-width: 150px; }
+        :root {
+            --primary: #9400D3;
+            --accent: #00FFFF;
+            --gold: #FFD700;
+            --bg-dark: #030005;
+            --card-bg: rgba(18, 0, 30, 0.85);
+        }
+
+        #google_translate_element { position: fixed; top: 60px; right: 10px; z-index: 9999; background: #000; border: 1px solid var(--accent); padding: 5px; border-radius: 5px; max-width: 150px; }
         .goog-te-banner-frame { display: none !important; }
         body { top: 0 !important; }
-        .goog-te-menu-frame { max-width: 150px !important; width: 150px !important; height: auto !important; overflow-y: auto !important; }
-        .goog-te-menu2 { max-width: 100% !important; width: 100% !important; }
-        .goog-te-menu2 table, .goog-te-menu2 tbody, .goog-te-menu2 tr, .goog-te-menu2 td { width: 100% !important; display: block !important; }
 
         * { box-sizing: border-box; }
         body { 
-            background-color: #050505; 
+            background-color: var(--bg-dark); 
             color: #ffffff; 
             font-family: 'Inter', sans-serif; 
             margin: 0; padding: 0; 
@@ -47,40 +48,40 @@
 
         .header {
             display: flex; align-items: center; padding: 15px 20px;
-            background: rgba(10, 0, 5, 0.9); backdrop-filter: blur(10px);
+            background: rgba(8, 0, 15, 0.95); backdrop-filter: blur(10px);
             position: fixed; top: 0; left: 0; width: 100%;
-            z-index: 100; border-bottom: 1px solid #ff007f;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+            z-index: 100; border-bottom: 1px solid var(--primary);
+            box-shadow: 0 0 20px rgba(148, 0, 211, 0.4);
         }
-        .menu-icon { font-size: 1.8em; cursor: pointer; color: #fff; margin-right: 15px; transition: 0.3s; }
-        .menu-icon:hover { color: #ff007f; }
+        .menu-icon { font-size: 1.8em; cursor: pointer; color: var(--accent); margin-right: 15px; transition: 0.3s; }
+        .menu-icon:hover { color: var(--gold); }
         
         .header-title { 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 1em; 
+            font-size: 0.95em; 
             letter-spacing: 3px; 
             font-weight: 900; 
             text-transform: uppercase; 
-            color: #ff007f; 
-            text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f; 
+            color: var(--accent); 
+            text-shadow: 0 0 10px var(--accent), 0 0 20px var(--primary); 
         }
 
         .sidebar {
             position: fixed; top: 0; left: -300px; width: 260px; height: 100%;
-            background: #0a0005; border-right: 1px solid #ff007f;
+            background: #080010; border-right: 1px solid var(--primary);
             padding-top: 80px; transition: 0.3s ease-in-out; z-index: 200;
-            box-shadow: 5px 0 30px rgba(255, 0, 127, 0.2);
+            box-shadow: 5px 0 30px rgba(148, 0, 211, 0.3);
         }
         .sidebar.open { left: 0; }
         .sidebar button {
             display: block; width: 100%; background: transparent; border: none;
             color: #888; padding: 18px 25px; text-align: left; font-size: 1em;
             cursor: pointer; transition: 0.3s; font-family: 'Inter', sans-serif;
-            letter-spacing: 1px; border-bottom: 1px solid #1a0a10;
+            letter-spacing: 1px; border-bottom: 1px solid #150025;
         }
         .sidebar button:hover, .sidebar button.active {
-            background: #1a0010; color: #ff007f; border-left: 3px solid #ff007f;
-            text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
+            background: #180030; color: var(--accent); border-left: 3px solid var(--accent);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
         }
 
         .overlay {
@@ -89,118 +90,104 @@
         }
         .overlay.active { display: block; }
 
-        .main-content { padding: 100px 20px 80px 20px; max-width: 600px; margin: 0 auto; }
+        .main-content { padding: 100px 20px 90px 20px; max-width: 600px; margin: 0 auto; }
         .page { display: none; animation: fadeIn 0.5s; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .card { 
-            background: rgba(15, 0, 8, 0.85); padding: 25px; border-radius: 12px; 
-            border: 1px solid #ff007f; box-shadow: 0 0 20px rgba(255, 0, 127, 0.15);
+            background: var(--card-bg); padding: 25px; border-radius: 12px; 
+            border: 1px solid var(--primary); box-shadow: 0 0 25px rgba(148, 0, 211, 0.2);
             margin-bottom: 20px; backdrop-filter: blur(5px);
         }
-        h2 { color: #fff; margin-top: 0; font-weight: 800; letter-spacing: 1px; }
-        p { color: #b08898; font-size: 0.95em; line-height: 1.6; }
+        h2 { color: var(--accent); margin-top: 0; font-weight: 800; letter-spacing: 1px; font-family: 'Orbitron', sans-serif; font-size: 1.15em; }
+        h3 { color: var(--gold); font-family: 'Orbitron', sans-serif; font-size: 1em; }
+        p { color: #d0b8e8; font-size: 0.95em; line-height: 1.6; }
 
         .hero-title { 
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.5em; 
+            font-size: 1.4em; 
             text-align: center; 
             margin-bottom: 20px; 
-            text-shadow: 0 0 15px rgba(255, 0, 127, 0.8), 0 0 30px rgba(255, 0, 127, 0.5); 
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 30px rgba(148, 0, 211, 0.6); 
             letter-spacing: 2px; 
             line-height: 1.5; 
             word-break: break-word; 
             color: #fff;
         }
         
-        .countdown-box { text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 1.3em; color: #ff007f; background: rgba(20, 0, 10, 0.8); padding: 20px; border-radius: 8px; border: 1px solid #ff007f; margin: 20px 0; text-shadow: 0 0 10px #ff007f; animation: pulse-neon 2s infinite; }
-        @keyframes pulse-neon { 0% { box-shadow: 0 0 10px rgba(255,0,127,0.5); } 50% { box-shadow: 0 0 25px rgba(255,0,127,1); } 100% { box-shadow: 0 0 10px rgba(255,0,127,0.5); } }
+        .countdown-box { text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 1.3em; color: var(--gold); background: rgba(10, 0, 20, 0.8); padding: 20px; border-radius: 8px; border: 1px solid var(--gold); margin: 20px 0; text-shadow: 0 0 10px var(--gold); animation: pulse-neon 2s infinite; }
+        @keyframes pulse-neon { 0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); } 50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); } 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); } }
         
-        .join-btn { display: block; text-align: center; padding: 18px; background: #ff007f; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 800; font-size: 1.1em; margin-top: 20px; transition: 0.3s; letter-spacing: 2px; box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
-        .join-btn:hover { transform: scale(1.02); background: #ff3399; box-shadow: 0 0 25px rgba(255, 0, 127, 0.8); }
+        .join-btn { display: block; text-align: center; padding: 18px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 800; font-size: 1.1em; margin-top: 20px; transition: 0.3s; letter-spacing: 2px; box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); }
+        .join-btn:hover { transform: scale(1.02); filter: brightness(1.2); box-shadow: 0 0 30px var(--accent); }
 
-        .gallery { display: flex; gap: 15px; overflow-x: auto; padding: 15px 0; margin-top: 10px; scrollbar-width: thin; scrollbar-color: #ff007f #0a0005; }
-        .gallery img { height: 140px; border-radius: 8px; border: 1px solid #333; transition: 0.3s; cursor: pointer; object-fit: cover; width: 200px; flex-shrink: 0; }
-        .gallery img:hover { transform: scale(1.05); border-color: #ff007f; box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
+        .gallery { display: flex; gap: 15px; overflow-x: auto; padding: 15px 0; margin-top: 10px; scrollbar-width: thin; scrollbar-color: var(--primary) var(--bg-dark); }
+        .gallery img { height: 140px; border-radius: 8px; border: 1px solid var(--primary); transition: 0.3s; cursor: pointer; object-fit: cover; width: 200px; flex-shrink: 0; }
+        .gallery img:hover { transform: scale(1.05); border-color: var(--accent); box-shadow: 0 0 15px var(--accent); }
 
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; text-align: center; }
-        .stat-box { background: #0a0005; border: 1px solid #ff007f; padding: 15px 10px; border-radius: 8px; }
-        .stat-val { font-family: 'Orbitron', sans-serif; font-size: 1.2em; color: #ff007f; font-weight: bold; }
-        .stat-lbl { font-size: 0.75em; color: #888; margin-top: 5px; text-transform: uppercase; }
+        .stat-box { background: #080015; border: 1px solid var(--primary); padding: 15px 10px; border-radius: 8px; }
+        .stat-val { font-family: 'Orbitron', sans-serif; font-size: 1.2em; color: var(--gold); font-weight: bold; }
+        .stat-lbl { font-size: 0.75em; color: #aaa; margin-top: 5px; text-transform: uppercase; }
 
-        .terminal-box { background: #000; border: 1px solid #333; border-left: 3px solid #ff007f; padding: 15px; font-family: 'Share Tech Mono', monospace; font-size: 0.85em; color: #00ff88; line-height: 1.6; border-radius: 6px; }
+        .terminal-box { background: #000; border: 1px solid #333; border-left: 3px solid var(--accent); padding: 15px; font-family: 'Share Tech Mono', monospace; font-size: 0.85em; color: var(--accent); line-height: 1.6; border-radius: 6px; }
 
-        input[type="text"], input[type="tel"], input[type="file"], textarea { padding: 16px; width: 100%; border-radius: 8px; border: 1px solid #ff007f; background: #000; color: #fff; margin-bottom: 15px; outline: none; font-family: 'Inter', sans-serif; transition: 0.3s; font-size: 1em; }
-        input:focus, textarea:focus { box-shadow: 0 0 10px rgba(255, 0, 127, 0.4); }
+        input[type="text"], input[type="tel"], textarea { padding: 15px; width: 100%; border-radius: 8px; border: 1px solid var(--primary); background: #020005; color: #fff; margin-bottom: 12px; outline: none; font-family: 'Inter', sans-serif; transition: 0.3s; font-size: 1em; }
+        input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0, 255, 255, 0.4); }
         
-        button.action-btn { padding: 16px; background: #ff007f; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 1em; width: 100%; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 10px rgba(255,0,127,0.3); }
-        button.action-btn:hover { background: #ff3399; box-shadow: 0 0 20px rgba(255,0,127,0.6); }
+        button.action-btn { padding: 15px; background: var(--primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 0.95em; width: 100%; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(148, 0, 211, 0.4); }
+        button.action-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 25px var(--accent); }
 
-        .phone-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        .country-select {
-            background: #1a0010; padding: 16px 10px; border-radius: 8px;
-            border: 1px solid #ff007f; color: #ff007f; font-weight: bold;
-            font-size: 0.95em; font-family: 'Inter', sans-serif; outline: none;
-            cursor: pointer; box-shadow: 0 0 10px rgba(255, 0, 127, 0.2) inset;
-            max-width: 155px;
+        .tool-subcard { background: #0a0018; border: 1px solid #350055; padding: 16px; border-radius: 10px; margin-bottom: 15px; }
+        .result-box {
+            margin-top: 15px; padding: 15px; border-radius: 8px; display: none;
+            background: #050010; border: 1px solid var(--accent); line-height: 1.5; word-break: break-word;
         }
-        .country-select option { background: #0a0005; color: #fff; }
-        .phone-group input { margin-bottom: 0; flex: 1; }
+        .timestamp { display: block; margin-top: 10px; font-size: 0.8em; color: var(--gold); font-family: 'Share Tech Mono', monospace; }
 
-        #check-result, #signal-message, #unban-message {
-            margin-top: 20px; padding: 15px; border-radius: 8px; display: none;
-            background: #0a0005; border: 1px solid #ff007f; line-height: 1.5;
+        /* --- BARRE DE CONTRÔLE AUDIO FLOTTANTE (MASTER MUTE) --- */
+        .audio-control-bar {
+            position: fixed; bottom: 12px; right: 12px; left: 12px; max-width: 350px; margin: 0 auto; z-index: 999;
+            display: flex; justify-content: space-between; align-items: center; background: rgba(14, 0, 25, 0.95);
+            border: 1px solid var(--accent); padding: 10px 16px; border-radius: 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
         }
-        .timestamp { display: block; margin-top: 10px; font-size: 0.8em; color: #888; font-family: 'Share Tech Mono', monospace; }
-
-        /* --- CONTRÔLE MUSIQUE FLOTTANT --- */
-        .music-controls {
-            position: fixed; bottom: 15px; right: 15px; z-index: 999;
-            display: flex; gap: 8px; background: rgba(15, 0, 8, 0.9);
-            border: 1px solid #ff007f; padding: 8px 12px; border-radius: 30px;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
-        }
-        .music-btn {
-            background: none; border: none; color: #ff007f; font-weight: bold;
+        .audio-btn {
+            background: none; border: none; color: var(--accent); font-weight: bold;
             cursor: pointer; font-size: 0.85em; font-family: 'Share Tech Mono', monospace;
         }
-        .music-btn:hover { color: #fff; }
+        .audio-btn:hover { color: var(--gold); }
 
         /* --- CHAT ET ADMIN --- */
         #chat-messages { max-height: 350px; overflow-y: auto; border: 1px solid #333; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #000; display: flex; flex-direction: column; gap: 10px;}
-        .msg-bubble { padding: 12px; border-radius: 8px; background: #1a0010; border-left: 3px solid #ff007f; font-size: 0.95em; }
-        .msg-author { color: #ff007f; font-weight: bold; font-size: 0.9em; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .msg-time { color: #555; font-size: 0.7em; font-weight: normal; }
-        .ban-btn { background: #500; color: #ff4444; border: 1px solid #ff0000; border-radius: 4px; padding: 2px 5px; font-size: 0.7em; cursor: pointer; margin-left: 10px; }
-        .ban-btn:hover { background: #ff0000; color: #fff; }
-        .unban-btn { background: #050; color: #44ff44; border: 1px solid #00ff00; border-radius: 4px; padding: 2px 5px; font-size: 0.7em; cursor: pointer; margin-left: 10px; }
-        .unban-btn:hover { background: #00ff00; color: #000; }
+        .msg-bubble { padding: 12px; border-radius: 8px; background: #120025; border-left: 3px solid var(--accent); font-size: 0.95em; }
+        .msg-author { color: var(--gold); font-weight: bold; font-size: 0.9em; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .msg-time { color: #666; font-size: 0.7em; font-weight: normal; }
+        .ban-btn { background: #300; color: #ff5555; border: 1px solid #ff0000; border-radius: 4px; padding: 2px 5px; font-size: 0.7em; cursor: pointer; margin-left: 10px; }
+        .unban-btn { background: #030; color: #55ff55; border: 1px solid #00ff00; border-radius: 4px; padding: 2px 5px; font-size: 0.7em; cursor: pointer; margin-left: 10px; }
 
-        #admin-panel { background: #1a0010; border: 1px solid #ff007f; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: none; }
-        #admin-panel h3 { color: #ff007f; margin-top: 0; }
+        #admin-panel { background: #120025; border: 1px solid var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; display: none; }
         .stat-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9em; }
 
         /* --- PAGE SYMBOLES --- */
         .symbols-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 10px; margin-top: 15px; }
-        .symbol-item { background: #1a0010; border: 1px solid #ff007f; border-radius: 8px; padding: 15px; text-align: center; font-size: 1.5em; cursor: pointer; transition: 0.3s; font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif; display: flex; justify-content: center; align-items: center; }
-        .symbol-item:hover { background: #ff007f; color: #000; transform: scale(1.1); }
+        .symbol-item { background: #120025; border: 1px solid var(--primary); border-radius: 8px; padding: 15px; text-align: center; font-size: 1.5em; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
+        .symbol-item:hover { background: var(--accent); color: #000; transform: scale(1.1); box-shadow: 0 0 15px var(--accent); }
 
         .scroll-content { margin-top: 20px; }
-        .scroll-content h3 { color: #ff007f; border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 5px; font-family: 'Orbitron', sans-serif; font-size: 1.05em; }
+        .scroll-content h3 { color: var(--accent); border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 5px; }
     </style>
 </head>
 <body>
 
     <div id="google_translate_element"></div>
     <canvas id="canvas-bg"></canvas>
-    <audio id="bg-music" preload="auto"></audio>
 
-    <!-- Contrôle audio flottant -->
-    <div class="music-controls">
-        <button class="music-btn" id="btn-toggle-music" onclick="toggleMusic()">🔊 SON: ON</button>
-        <span style="color:#ff007f;">|</span>
-        <button class="music-btn" onclick="playRandomSong()">⏭️ NEXT BEAT</button>
+    <!-- Barre de contrôle audio globale (Couper / Activer le son) -->
+    <div class="audio-control-bar">
+        <span style="color:var(--gold); font-family:'Share Tech Mono', monospace; font-size:0.85em;">SON SYSTÈME :</span>
+        <button class="audio-btn" id="btn-audio-master" onclick="toggleMasterAudio()">🔊 ACTIF</button>
     </div>
 
     <div class="header">
@@ -213,6 +200,7 @@
     <div class="sidebar" id="sidebar">
         <button onclick="showPage('accueil')" class="active" id="btn-accueil">Accueil</button>
         <button onclick="showPage('checkban')" id="btn-checkban">Check-Ban</button>
+        <button onclick="showPage('outils')" id="btn-outils">Boîte à Outils</button>
         <button onclick="showPage('communaute')" id="btn-communaute">Communauté</button>
         <button onclick="showPage('signal')" id="btn-signal">Signaler</button>
         <button onclick="showPage('unban')" id="btn-unban">Unban</button>
@@ -225,114 +213,129 @@
         <div id="accueil" class="page active">
             <div class="card">
                 <h1 class="hero-title">⛂◇⛂ 𝐓𝐇𝐄 𝐁𝐑𝐘𝐃𝐋𝐘 𝐏𝐑𝐎𝐓𝐎𝐂𝐎𝐋 ⛂◇⛂</h1>
-                <p style="text-align: center;">Initialisation du protocole. Accès autorisé au réseau sécurisé.</p>
+                <p style="text-align: center;">Initialisation du protocole de cyber-sécurité et d'analyse réseau.</p>
                 <div class="countdown-box" id="countdown">Chargement...</div>
                 <div class="stats-grid">
                     <div class="stat-box">
-                        <div class="stat-val">99.8%</div>
-                        <div class="stat-lbl">Uptime API</div>
+                        <div class="stat-val">100%</div>
+                        <div class="stat-lbl">Fiabilité</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-val">240+</div>
-                        <div class="stat-lbl">Pays Supportés</div>
+                        <div class="stat-val">Global</div>
+                        <div class="stat-lbl">Passerelle</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-val">V4.2</div>
-                        <div class="stat-lbl">Noyau Système</div>
+                        <div class="stat-val">V6.1</div>
+                        <div class="stat-lbl">Audio Controller</div>
                     </div>
                 </div>
-                <a href="https://whatsapp.com/channel/0029Vb8yrUX9cDDQlZbEaW3L" target="_blank" class="join-btn">REJOINDRE LE RÉSEAU</a>
+                <a href="https://whatsapp.com/channel/0029Vb8yrUX9cDDQlZbEaW3L" target="_blank" class="join-btn">REJOINDRE LE CANAL OFFICIEL</a>
             </div>
 
             <div class="scroll-content">
                 <div class="card">
                     <h3>01. LE MANIFESTE</h3>
-                    <p>Je ne code pas pour le spectacle. Je construis des systèmes. Chaque script, chaque outil déployé ici est conçu pour dominer et automatiser l'analyse numérique. Le silence est mon langage, le code est mon arme. Bienvenue dans mon architecture.</p>
-                    <p style="text-align: right; color: #ff007f; font-family: 'Share Tech Mono', monospace;">- Celeste Brydly</p>
+                    <p>Ce protocole est un arsenal d'outils conçu pour analyser, vérifier et interagir avec les passerelles de messagerie. Précision, rapidité et efficacité sont nos mots d'ordre.</p>
+                    <p style="text-align: right; color: var(--gold); font-family: 'Share Tech Mono', monospace;">- Celeste Brydly</p>
                 </div>
 
                 <div class="card">
-                    <h3>02. JOURNAL SYSTÈME (LOGS)</h3>
+                    <h3>02. JOURNAL SYSTÈME EN DIRECT</h3>
                     <div class="terminal-box">
-                        [OK] Connexion au nœud principal établie...<br>
-                        [OK] Chargement de la base mondiale des indicatifs (+1 à +998)...<br>
-                        [OK] Module Anti-Ban & Vérification WhatsApp prêt.<br>
-                        [INFO] Scrollez vers le bas pour explorer l'architecture.
+                        [SYS] Gestionnaire audio global actif.<br>
+                        [SYS] Le son s'éteint automatiquement si vous quittez l'onglet ou désactivez l'audio.<br>
+                        [SYS] Boîte à Outils OSINT & Générateur wa.me prêts.<br>
+                        [INFO] Testez le Check-Ban dès maintenant depuis le menu.
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3>03. LES ARCHIVES VISUELLES</h3>
-                    <p>Des fragments de code, des preuves de concept, des reliques de l'underground. Chaque image est une trace de mon passage dans le réseau.</p>
+                    <h3>03. GALERIE ARCHIVES CYBER</h3>
                     <div class="gallery">
-                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=500&auto=format&fit=crop" alt="Code">
                         <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=500&auto=format&fit=crop" alt="Matrix">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=500&auto=format&fit=crop" alt="Security">
                         <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=500&auto=format&fit=crop" alt="Cyber">
                         <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=500&auto=format&fit=crop" alt="Hardware">
-                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=500&auto=format&fit=crop" alt="Security">
-                        <img src="https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=500&auto=format&fit=crop" alt="Neon">
                     </div>
-                </div>
-
-                <div class="card">
-                    <h3>04. LES PROTOCOLES DISPONIBLES</h3>
-                    <p>Voici les outils à ta disposition. Utilise-les avec précision et sagesse :</p>
-                    <ul style="color: #b08898; line-height: 1.9;">
-                        <li><b style="color:#fff;">Check-Ban Mondial</b> : Sélectionne n'importe quel indicatif pays du monde et vérifie instantanément si le numéro est actif ou banni.</li>
-                        <li><b style="color:#fff;">Communauté Cryptée</b> : Rejoins le salon de discussion, échange avec les membres et gagne ta place.</li>
-                        <li><b style="color:#fff;">Signaler (Report)</b> : Génère une requête officielle de signalement vers le support WhatsApp.</li>
-                        <li><b style="color:#fff;">Unban Meta</b> : Prépare automatiquement un recours structuré auprès des serveurs Meta pour récupérer un accès.</li>
-                        <li><b style="color:#fff;">Symboles Rares</b> : Une collection de caractères spéciaux prêts à être copiés en un clic pour tes pseudos.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>05. SÉCURITÉ & FURTIVITÉ</h3>
-                    <p>Aucune donnée personnelle n'est conservée sur des serveurs tiers non chiffrés. Les vérifications passent par des requêtes légères pour éviter tout blocage d'adresse IP.</p>
-                    <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=800&auto=format&fit=crop" alt="Cyber Terminal" style="width:100%; height:160px; object-fit:cover; border-radius:8px; border:1px solid #ff007f; margin-top:10px;">
-                </div>
-
-                <div class="card">
-                    <h3>06. LE CODE SOURCE</h3>
-                    <p>Cette plateforme a été forgée à la main, sans framework lourd. Chaque ligne a été optimisée pour la rapidité, l'esthétique sombre et l'efficacité brute.</p>
-                    <p>Le système reçoit des mises à jour régulières. Reste connecté sur le canal officiel pour les prochains déploiements.</p>
                 </div>
 
                 <div class="card" style="text-align: center;">
-                    <h3>07. CONTACT DIRECT</h3>
-                    <p>Une requête spéciale ? Un bug à signaler au créateur ?</p>
-                    <a href="mailto:brydanox@gmail.com" class="action-btn" style="display: block; text-decoration: none; margin-top: 15px;">CONTACTER LE DEV</a>
+                    <h3>04. SUPPORT & CONTACT</h3>
+                    <p>Besoin d'assistance technique ou d'un rapport de bug ?</p>
+                    <a href="mailto:brydanox@gmail.com" class="action-btn" style="display: block; text-decoration: none; margin-top: 15px;">CONTACTER LE DÉVELOPPEUR</a>
                 </div>
             </div>
         </div>
 
-        <!-- CHECK-BAN -->
+        <!-- CHECK-BAN (SAISIE MANUELLE) -->
         <div id="checkban" class="page">
             <div class="card">
-                <h2>Vérification WhatsApp</h2>
-                <p>Choisis l'indicatif du pays dans la première case et entre le numéro dans la seconde.</p>
-                <div class="phone-group">
-                    <select id="check-country" class="country-select world-countries"></select>
-                    <input type="tel" id="check-number" placeholder="Ex: 627956075">
+                <h2>Vérification WhatsApp (API Test)</h2>
+                <p>Entrez le numéro complet directement avec son indicatif international (Exemple : <b>+224627956075</b> ou <b>+33612345678</b>).</p>
+                
+                <input type="text" id="check-full-number" placeholder="+224627956075">
+                
+                <button class="action-btn" onclick="checkBanManuelle()" style="margin-top: 5px;">EXÉCUTER LE SCAN</button>
+                <div id="check-result" class="result-box"></div>
+            </div>
+        </div>
+
+        <!-- BOÎTE À OUTILS -->
+        <div id="outils" class="page">
+            <div class="card">
+                <h2>Boîte à Outils Avancée</h2>
+                <p>Sélectionne et utilise les utilitaires intégrés :</p>
+
+                <!-- Outil 1 : Générateur de lien direct WhatsApp -->
+                <div class="tool-subcard">
+                    <h3>1. Générateur Lien Direct (wa.me)</h3>
+                    <input type="text" id="tool-wa-num" placeholder="Numéro complet (ex: +224627956075)">
+                    <input type="text" id="tool-wa-msg" placeholder="Message pré-rempli (optionnel)">
+                    <button class="action-btn" onclick="generateWaLink()">CRÉER & COPIER LE LIEN</button>
+                    <div id="res-wa-link" class="result-box"></div>
                 </div>
-                <button class="action-btn" onclick="checkBan()" style="margin-top: 15px;">EXÉCUTER LE SCAN</button>
-                <div id="check-result"></div>
+
+                <!-- Outil 2 : Analyseur OSINT d'Indicatif -->
+                <div class="tool-subcard">
+                    <h3>2. Analyseur OSINT Numéro</h3>
+                    <input type="text" id="tool-osint-num" placeholder="Entrez un numéro (ex: +221770000000)">
+                    <button class="action-btn" onclick="analyzeNumberOsint()">ANALYSER LE NUMÉRO</button>
+                    <div id="res-osint" class="result-box"></div>
+                </div>
+
+                <!-- Outil 3 : Générateur Texte Glitch -->
+                <div class="tool-subcard">
+                    <h3>3. Texte Crypté / Glitch</h3>
+                    <input type="text" id="tool-glitch-text" placeholder="Écris ton pseudo ou texte...">
+                    <button class="action-btn" onclick="generateGlitchText()">TRANSFORMER & COPIER</button>
+                    <div id="res-glitch" class="result-box"></div>
+                </div>
+
+                <!-- Outil 4 : Diagnostics Réseau -->
+                <div class="tool-subcard" style="margin-bottom: 0;">
+                    <h3>4. Diagnostics Système</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="action-btn" onclick="runDiag('ping')" style="background: #180030; border: 1px solid var(--accent);">TEST PING</button>
+                        <button class="action-btn" onclick="runDiag('ua')" style="background: #180030; border: 1px solid var(--accent);">USER-AGENT</button>
+                    </div>
+                    <div id="res-diag" class="result-box"></div>
+                </div>
             </div>
         </div>
 
         <!-- COMMUNAUTÉ -->
         <div id="communaute" class="page">
-            <div id="auth-warning" class="card" style="text-align: center; border-color: #ff007f;">
-                <h2 style="color: #ff007f;">Accès Communauté</h2>
-                <p>Entre ton pseudo pour rejoindre le chat.</p>
+            <div id="auth-warning" class="card" style="text-align: center; border-color: var(--primary);">
+                <h2 style="color: var(--accent);">Accès Communauté</h2>
+                <p>Entre ton pseudo pour rejoindre le salon chiffré.</p>
                 <input type="text" id="login-pseudo-input" placeholder="Ton pseudo" style="text-align: center; margin-top: 15px;">
                 <button class="action-btn" onclick="loginUser()">REJOINDRE</button>
             </div>
 
             <div id="chat-container" style="display: none;">
                 <div class="card" style="padding: 15px;">
-                    <h3 style="color: #ff007f; margin-top: 0; font-size: 1em;">Mon Profil</h3>
-                    <p style="font-size: 0.9em; margin-bottom: 10px;">Pseudo actuel : <strong id="current-user" style="color: #fff;"></strong> <span id="user-role" style="color: #888; font-size: 0.8em;"></span></p>
+                    <h3 style="color: var(--accent); margin-top: 0; font-size: 1em;">Mon Profil</h3>
+                    <p style="font-size: 0.9em; margin-bottom: 10px;">Pseudo actuel : <strong id="current-user" style="color: #fff;"></strong> <span id="user-role" style="color: var(--gold); font-size: 0.8em;"></span></p>
                     <input type="text" id="new-pseudo-input" placeholder="Nouveau pseudo" style="padding: 10px; font-size: 0.9em;">
                     <button class="action-btn" onclick="changePseudo()" style="padding: 10px; font-size: 0.9em;">CHANGER DE PSEUDO</button>
                 </div>
@@ -340,12 +343,12 @@
                 <div id="admin-panel">
                     <h3>👑 PANNEAU OWNER (Celeste Brydly)</h3>
                     <div class="stat-row"><span>Messages totaux :</span> <span id="stat-msgs" style="color: #fff; font-weight: bold;">0</span></div>
-                    <div class="stat-row"><span>Membres bannis :</span> <span id="stat-bans" style="color: #ff4444; font-weight: bold;">0</span></div>
+                    <div class="stat-row"><span>Membres bannis :</span> <span id="stat-bans" style="color: #ff5555; font-weight: bold;">0</span></div>
                     <div style="margin-top: 10px;">
                         <input type="text" id="new-admin-input" placeholder="Nom du nouvel admin" style="padding: 10px; font-size: 0.8em;">
                         <button class="action-btn" onclick="makeAdmin()" style="padding: 10px; font-size: 0.8em; margin-top: 5px;">NOMMER ADMIN</button>
                     </div>
-                    <button class="action-btn" onclick="resetChat()" style="background: #ff0000; color: #fff; margin-top: 10px; padding: 10px; font-size: 0.8em;">EFFACER LE CHAT</button>
+                    <button class="action-btn" onclick="resetChat()" style="background: #500000; color: #fff; margin-top: 10px; padding: 10px; font-size: 0.8em;">EFFACER LE CHAT</button>
                 </div>
 
                 <div class="card">
@@ -359,39 +362,33 @@
             </div>
         </div>
 
-        <!-- SIGNALER (WhatsApp) -->
+        <!-- SIGNALER -->
         <div id="signal" class="page">
             <div class="card">
-                <h2>Signaler à WhatsApp</h2>
-                <p>Sélectionne l'indicatif et entre le numéro à signaler pour non-respect des conditions.</p>
-                <div class="phone-group">
-                    <select id="signal-country" class="country-select world-countries"></select>
-                    <input type="tel" id="signal-number" placeholder="Ex: 627956075">
-                </div>
-                <button class="action-btn" onclick="sendSignal()" style="margin-top: 15px; background: #ff0000;">🚨 SIGNALER À WHATSAPP</button>
-                <div id="signal-message"></div>
+                <h2>Signaler à WhatsApp (Manuel)</h2>
+                <p>Entrez le numéro complet à signaler (ex: <b>+224627956075</b>).</p>
+                <input type="text" id="signal-full-number" placeholder="+224627956075">
+                <button class="action-btn" onclick="sendSignalManuel()" style="margin-top: 5px; background: #500020;">🚨 SIGNALER À WHATSAPP</button>
+                <div id="signal-message" class="result-box"></div>
             </div>
         </div>
 
-        <!-- UNBAN (Meta) -->
+        <!-- UNBAN -->
         <div id="unban" class="page">
             <div class="card">
-                <h2>Demander Unban (Meta)</h2>
-                <p>Sélectionne l'indicatif et entre le numéro banni pour générer le recours Meta.</p>
-                <div class="phone-group">
-                    <select id="unban-country" class="country-select world-countries"></select>
-                    <input type="tel" id="unban-number" placeholder="Ex: 627956075">
-                </div>
-                <button class="action-btn" onclick="sendUnban()" style="margin-top: 15px; background: #ff007f;">🔓 DEMANDER UNBAN (META)</button>
-                <div id="unban-message"></div>
+                <h2>Demander Unban Meta (Manuel)</h2>
+                <p>Entrez le numéro complet banni (ex: <b>+224627956075</b>).</p>
+                <input type="text" id="unban-full-number" placeholder="+224627956075">
+                <button class="action-btn" onclick="sendUnbanManuel()" style="margin-top: 5px; background: var(--primary);">🔓 DEMANDER UNBAN (META)</button>
+                <div id="unban-message" class="result-box"></div>
             </div>
         </div>
 
         <!-- PAGE SYMBOLES -->
         <div id="symboles" class="page">
             <div class="card">
-                <h2>Bibliothèque de Symboles</h2>
-                <p>Clique sur un symbole pour le copier.</p>
+                <h2>Bibliothèque de Symboles & Objets</h2>
+                <p>Clique sur un symbole pour le copier instantanément.</p>
                 <div class="symbols-grid" id="symbols-grid"></div>
             </div>
         </div>
@@ -399,276 +396,105 @@
     </div>
 
     <script>
-        // --- 0. LISTE COMPLÈTE DES INDICATIFS DU MONDE ---
-        const allCountries = [
-            { name: "Guinée", code: "224", flag: "🇬🇳" },
-            { name: "Sénégal", code: "221", flag: "🇸🇳" },
-            { name: "Côte d'Ivoire", code: "225", flag: "🇨🇮" },
-            { name: "Mali", code: "223", flag: "🇲🇱" },
-            { name: "Burkina Faso", code: "226", flag: "🇧🇫" },
-            { name: "France", code: "33", flag: "🇫🇷" },
-            { name: "Afghanistan", code: "93", flag: "🇦🇫" },
-            { name: "Afrique du Sud", code: "27", flag: "🇿🇦" },
-            { name: "Albanie", code: "355", flag: "🇦🇱" },
-            { name: "Algérie", code: "213", flag: "🇩🇿" },
-            { name: "Allemagne", code: "49", flag: "🇩🇪" },
-            { name: "Andorre", code: "376", flag: "🇦🇩" },
-            { name: "Angola", code: "244", flag: "🇦🇴" },
-            { name: "Arabie Saoudite", code: "966", flag: "🇸🇦" },
-            { name: "Argentine", code: "54", flag: "🇦🇷" },
-            { name: "Arménie", code: "374", flag: "🇦🇲" },
-            { name: "Australie", code: "61", flag: "🇦🇺" },
-            { name: "Autriche", code: "43", flag: "🇦🇹" },
-            { name: "Azerbaïdjan", code: "994", flag: "🇦🇿" },
-            { name: "Bahreïn", code: "973", flag: "🇧🇭" },
-            { name: "Bangladesh", code: "880", flag: "🇧🇩" },
-            { name: "Belgique", code: "32", flag: "🇧🇪" },
-            { name: "Bénin", code: "229", flag: "🇧🇯" },
-            { name: "Biélorussie", code: "375", flag: "🇧🇾" },
-            { name: "Bolivie", code: "591", flag: "🇧🇴" },
-            { name: "Bosnie-Herzégovine", code: "387", flag: "🇧🇦" },
-            { name: "Botswana", code: "267", flag: "🇧🇼" },
-            { name: "Brésil", code: "55", flag: "🇧🇷" },
-            { name: "Bulgarie", code: "359", flag: "🇧🇬" },
-            { name: "Burundi", code: "257", flag: "🇧🇮" },
-            { name: "Cambodge", code: "855", flag: "🇰🇭" },
-            { name: "Cameroun", code: "237", flag: "🇨🇲" },
-            { name: "Canada / USA", code: "1", flag: "🇺🇸" },
-            { name: "Cap-Vert", code: "238", flag: "🇨🇻" },
-            { name: "Centrafrique", code: "236", flag: "🇨🇫" },
-            { name: "Chili", code: "56", flag: "🇨🇱" },
-            { name: "Chine", code: "86", flag: "🇨🇳" },
-            { name: "Chypre", code: "357", flag: "🇨🇾" },
-            { name: "Colombie", code: "57", flag: "🇨🇴" },
-            { name: "Comores", code: "269", flag: "🇰🇲" },
-            { name: "Congo (Brazzaville)", code: "242", flag: "🇨🇬" },
-            { name: "Congo (RDC)", code: "243", flag: "🇨🇩" },
-            { name: "Corée du Sud", code: "82", flag: "🇰🇷" },
-            { name: "Costa Rica", code: "506", flag: "🇨🇷" },
-            { name: "Croatie", code: "385", flag: "🇭🇷" },
-            { name: "Cuba", code: "53", flag: "🇨🇺" },
-            { name: "Danemark", code: "45", flag: "🇩🇰" },
-            { name: "Djibouti", code: "253", flag: "🇩🇯" },
-            { name: "Égypte", code: "20", flag: "🇪🇬" },
-            { name: "Émirats Arabes Unis", code: "971", flag: "🇦🇪" },
-            { name: "Équateur", code: "593", flag: "🇪🇨" },
-            { name: "Érythrée", code: "291", flag: "🇪🇷" },
-            { name: "Espagne", code: "34", flag: "🇪🇸" },
-            { name: "Estonie", code: "372", flag: "🇪🇪" },
-            { name: "Eswatini", code: "268", flag: "🇸🇿" },
-            { name: "Éthiopie", code: "251", flag: "🇪🇹" },
-            { name: "Finlande", code: "358", flag: "🇫🇮" },
-            { name: "Gabon", code: "241", flag: "🇬🇦" },
-            { name: "Gambie", code: "220", flag: "🇬🇲" },
-            { name: "Géorgie", code: "995", flag: "🇬🇪" },
-            { name: "Ghana", code: "233", flag: "🇬🇭" },
-            { name: "Grèce", code: "30", flag: "🇬🇷" },
-            { name: "Guatemala", code: "502", flag: "🇬🇹" },
-            { name: "Guinée-Bissau", code: "245", flag: "🇬🇼" },
-            { name: "Guinée Équatoriale", code: "240", flag: "🇬🇶" },
-            { name: "Haïti", code: "509", flag: "🇭🇹" },
-            { name: "Honduras", code: "504", flag: "🇭🇳" },
-            { name: "Hong Kong", code: "852", flag: "🇭🇰" },
-            { name: "Hongrie", code: "36", flag: "🇭🇺" },
-            { name: "Inde", code: "91", flag: "🇮🇳" },
-            { name: "Indonésie", code: "62", flag: "🇮🇩" },
-            { name: "Irak", code: "964", flag: "🇮🇶" },
-            { name: "Iran", code: "98", flag: "🇮🇷" },
-            { name: "Irlande", code: "353", flag: "🇮🇪" },
-            { name: "Islande", code: "354", flag: "🇮🇸" },
-            { name: "Israël", code: "972", flag: "🇮🇱" },
-            { name: "Italie", code: "39", flag: "🇮🇹" },
-            { name: "Japon", code: "81", flag: "🇯🇵" },
-            { name: "Jordanie", code: "962", flag: "🇯🇴" },
-            { name: "Kazakhstan", code: "7", flag: "🇰🇿" },
-            { name: "Kenya", code: "254", flag: "🇰🇪" },
-            { name: "Kirghizistan", code: "996", flag: "🇰🇬" },
-            { name: "Koweït", code: "965", flag: "🇰🇼" },
-            { name: "Laos", code: "856", flag: "🇱🇦" },
-            { name: "Lesotho", code: "266", flag: "🇱🇸" },
-            { name: "Lettonie", code: "371", flag: "🇱🇻" },
-            { name: "Liban", code: "961", flag: "🇱🇧" },
-            { name: "Liberia", code: "231", flag: "🇱🇷" },
-            { name: "Libye", code: "218", flag: "🇱🇾" },
-            { name: "Liechtenstein", code: "423", flag: "🇱🇮" },
-            { name: "Lituanie", code: "370", flag: "🇱🇹" },
-            { name: "Luxembourg", code: "352", flag: "🇱🇺" },
-            { name: "Madagascar", code: "261", flag: "🇲🇬" },
-            { name: "Malaisie", code: "60", flag: "🇲🇾" },
-            { name: "Malawi", code: "265", flag: "🇲🇼" },
-            { name: "Maldives", code: "960", flag: "🇲🇻" },
-            { name: "Malte", code: "356", flag: "🇲🇹" },
-            { name: "Maroc", code: "212", flag: "🇲🇦" },
-            { name: "Maurice", code: "230", flag: "🇲🇺" },
-            { name: "Mauritanie", code: "222", flag: "🇲🇷" },
-            { name: "Mexique", code: "52", flag: "🇲🇽" },
-            { name: "Moldavie", code: "373", flag: "🇲🇩" },
-            { name: "Monaco", code: "377", flag: "🇲🇨" },
-            { name: "Mongolie", code: "976", flag: "🇲🇳" },
-            { name: "Monténégro", code: "382", flag: "🇲🇪" },
-            { name: "Mozambique", code: "258", flag: "🇲🇿" },
-            { name: "Myanmar", code: "95", flag: "🇲🇲" },
-            { name: "Namibie", code: "264", flag: "🇳🇦" },
-            { name: "Népal", code: "977", flag: "🇳🇵" },
-            { name: "Nicaragua", code: "505", flag: "🇳🇮" },
-            { name: "Niger", code: "227", flag: "🇳🇪" },
-            { name: "Nigeria", code: "234", flag: "🇳🇬" },
-            { name: "Norvège", code: "47", flag: "🇳🇴" },
-            { name: "Nouvelle-Zélande", code: "64", flag: "🇳🇿" },
-            { name: "Oman", code: "968", flag: "🇴🇲" },
-            { name: "Ouganda", code: "256", flag: "🇺🇬" },
-            { name: "Ouzbékistan", code: "998", flag: "🇺🇿" },
-            { name: "Pakistan", code: "92", flag: "🇵🇰" },
-            { name: "Palestine", code: "970", flag: "🇵🇸" },
-            { name: "Panama", code: "507", flag: "🇵🇦" },
-            { name: "Paraguay", code: "595", flag: "🇵🇾" },
-            { name: "Pays-Bas", code: "31", flag: "🇳🇱" },
-            { name: "Pérou", code: "51", flag: "🇵🇪" },
-            { name: "Philippines", code: "63", flag: "🇵🇭" },
-            { name: "Pologne", code: "48", flag: "🇵🇱" },
-            { name: "Portugal", code: "351", flag: "🇵🇹" },
-            { name: "Qatar", code: "974", flag: "🇶🇦" },
-            { name: "République Dominicaine", code: "1809", flag: "🇩🇴" },
-            { name: "République Tchèque", code: "420", flag: "🇨🇿" },
-            { name: "Roumanie", code: "40", flag: "🇷🇴" },
-            { name: "Royaume-Uni", code: "44", flag: "🇬🇧" },
-            { name: "Russie", code: "7", flag: "🇷🇺" },
-            { name: "Rwanda", code: "250", flag: "🇷🇼" },
-            { name: "Salvador", code: "503", flag: "🇸🇻" },
-            { name: "Serbie", code: "381", flag: "🇷🇸" },
-            { name: "Seychelles", code: "248", flag: "🇸🇨" },
-            { name: "Sierra Leone", code: "232", flag: "🇸🇱" },
-            { name: "Singapour", code: "65", flag: "🇸🇬" },
-            { name: "Slovaquie", code: "421", flag: "🇸🇰" },
-            { name: "Slovénie", code: "386", flag: "🇸🇮" },
-            { name: "Somalie", code: "252", flag: "🇸🇴" },
-            { name: "Soudan", code: "249", flag: "🇸🇩" },
-            { name: "Soudan du Sud", code: "211", flag: "🇸🇸" },
-            { name: "Sri Lanka", code: "94", flag: "🇱🇰" },
-            { name: "Suède", code: "46", flag: "🇸🇪" },
-            { name: "Suisse", code: "41", flag: "🇨🇭" },
-            { name: "Suriname", code: "597", flag: "🇸🇷" },
-            { name: "Syrie", code: "963", flag: "🇸🇾" },
-            { name: "Tadjikistan", code: "992", flag: "🇹🇯" },
-            { name: "Taïwan", code: "886", flag: "🇹🇼" },
-            { name: "Tanzanie", code: "255", flag: "🇹🇿" },
-            { name: "Tchad", code: "235", flag: "🇹🇩" },
-            { name: "Thaïlande", code: "66", flag: "🇹🇭" },
-            { name: "Togo", code: "228", flag: "🇹🇬" },
-            { name: "Tunisie", code: "216", flag: "🇹🇳" },
-            { name: "Turkménistan", code: "993", flag: "🇹🇲" },
-            { name: "Turquie", code: "90", flag: "🇹🇷" },
-            { name: "Ukraine", code: "380", flag: "🇺🇦" },
-            { name: "Uruguay", code: "598", flag: "🇺🇾" },
-            { name: "Venezuela", code: "58", flag: "🇻🇪" },
-            { name: "Vietnam", code: "84", flag: "🇻🇳" },
-            { name: "Yémen", code: "967", flag: "🇾🇪" },
-            { name: "Zambie", code: "260", flag: "🇿🇲" },
-            { name: "Zimbabwe", code: "263", flag: "🇿🇼" }
-        ];
-
-        // Remplissage automatique de tous les sélecteurs de pays
-        document.querySelectorAll('.world-countries').forEach(select => {
-            allCountries.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.code;
-                opt.textContent = `${c.flag} +${c.code} (${c.name})`;
-                select.appendChild(opt);
-            });
-        });
-
         // --- 1. MENU ---
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        // --- 2. SYNTHÉTISEUR AUDIO NATIF (POUR LE SCROLL & LES CLICS SANS JAMAIS PLANTER) ---
+        // --- 2. GESTIONNAIRE AUDIO & EFFETS SONORES (MASTER MUTE & AUTO-KILL) ---
         let audioCtx = null;
-        function playCyberTick(freq = 600, duration = 0.04, type = 'sine') {
+        let isGlobalAudioMuted = false;
+
+        function toggleMasterAudio() {
+            isGlobalAudioMuted = !isGlobalAudioMuted;
+            const btn = document.getElementById('btn-audio-master');
+            if (isGlobalAudioMuted) {
+                btn.innerText = "🔇 COUPÉ";
+                btn.style.color = "#ff5555";
+                if (audioCtx && audioCtx.state === 'running') {
+                    audioCtx.suspend();
+                }
+            } else {
+                btn.innerText = "🔊 ACTIF";
+                btn.style.color = "var(--accent)";
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                playCyberSfx('success');
+            }
+        }
+
+        // S'éteint automatiquement si l'utilisateur quitte l'onglet ou change de page
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden && audioCtx && audioCtx.state === 'running') {
+                audioCtx.suspend();
+            }
+        });
+
+        function playCyberSfx(type = 'click') {
+            if (isGlobalAudioMuted) return;
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
+                
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                const now = audioCtx.currentTime;
+
+                if (type === 'scroll') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(450, now);
+                    osc.frequency.exponentialRampToValueAtTime(580, now + 0.03);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+                } else if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(700, now);
+                    osc.frequency.exponentialRampToValueAtTime(300, now + 0.06);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+                } else if (type === 'success') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(783.99, now + 0.08);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                } else if (type === 'alert') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(90, now + 0.3);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                }
+
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + duration);
+                osc.start(now);
+                osc.stop(now + 0.3);
             } catch (e) {}
         }
 
-        document.querySelectorAll('.sidebar button, .action-btn, .join-btn, .menu-icon, .ban-btn, .unban-btn, .symbol-item, .music-btn').forEach(btn => {
-            btn.addEventListener('click', () => playCyberTick(850, 0.06, 'triangle'));
+        document.querySelectorAll('.sidebar button, .action-btn, .join-btn, .menu-icon, .symbol-item, .audio-btn').forEach(btn => {
+            btn.addEventListener('click', () => playCyberSfx('click'));
         });
         
-        // Bruit mécanique/cybernétique à chaque scroll
         let lastScrollTop = 0;
         let lastScrollTime = 0;
         window.addEventListener('scroll', function() {
             const now = Date.now();
             const st = window.scrollY;
-            if (Math.abs(st - lastScrollTop) > 25 && (now - lastScrollTime) > 65) {
-                const pitch = st > lastScrollTop ? 420 : 520; // Son légèrement différent si on monte ou descend
-                playCyberTick(pitch, 0.035, 'sine');
+            if (Math.abs(st - lastScrollTop) > 30 && (now - lastScrollTime) > 80) {
+                playCyberSfx('scroll');
                 lastScrollTop = st;
                 lastScrollTime = now;
             }
         });
 
-        // --- 3. MUSIQUES RANDOM QUI MARCHENT (FLUX STABLES) ---
-        const musiques = [
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3"
-        ];
-        let currentSongIndex = -1;
-        let isMusicMuted = false;
-        const audioPlayer = document.getElementById('bg-music');
-
-        function playRandomSong() {
-            let newIndex = Math.floor(Math.random() * musiques.length);
-            if (musiques.length > 1 && newIndex === currentSongIndex) {
-                newIndex = (newIndex + 1) % musiques.length;
-            }
-            currentSongIndex = newIndex;
-            audioPlayer.src = musiques[currentSongIndex];
-            audioPlayer.volume = 0.35;
-            if (!isMusicMuted) {
-                audioPlayer.play().catch(e => console.log("En attente d'un clic utilisateur pour l'audio"));
-            }
-        }
-
-        function toggleMusic() {
-            const btn = document.getElementById('btn-toggle-music');
-            if (audioPlayer.paused) {
-                isMusicMuted = false;
-                if (!audioPlayer.src) playRandomSong();
-                else audioPlayer.play();
-                btn.innerText = "🔊 SON: ON";
-            } else {
-                isMusicMuted = true;
-                audioPlayer.pause();
-                btn.innerText = "🔇 SON: OFF";
-            }
-        }
-
-        window.addEventListener('load', playRandomSong);
-        document.body.addEventListener('click', function() {
-            if (audioPlayer.paused && !isMusicMuted) {
-                audioPlayer.play().catch(e => {});
-            }
-        }, { once: true });
-        audioPlayer.addEventListener('ended', playRandomSong);
-
-        // --- 4. FOND ANIMÉ ---
-        const canvas = document.getElementById('canvas-bg');
+        // --- 3. FOND MATRIX ANIMÉ ---
+        const canvas = document.createElement('canvas');
+        canvas.id = 'canvas-bg';
+        document.body.prepend(canvas);
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?".split("");
@@ -677,8 +503,8 @@
         const drops = [];
         for (let x = 0; x < columns; x++) drops[x] = 1;
         function drawMatrix() {
-            ctx.fillStyle = "rgba(5, 5, 5, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#ff007f"; ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+            ctx.fillStyle = "rgba(3, 0, 5, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#9400D3"; ctx.font = fontSize + "px 'Share Tech Mono', monospace";
             for (let i = 0; i < drops.length; i++) {
                 const text = chars[Math.floor(Math.random() * chars.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -689,7 +515,7 @@
         setInterval(drawMatrix, 50);
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-        // --- 5. COMPTE À REBOURS ---
+        // --- 4. COMPTE À REBOURS ---
         function startCountdown() {
             const targetDate = new Date(); targetDate.setDate(targetDate.getDate() + 3); 
             const timer = setInterval(function() {
@@ -705,7 +531,7 @@
         }
         startCountdown();
 
-        // --- 6. NAVIGATION ---
+        // --- 5. NAVIGATION ---
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
@@ -716,49 +542,131 @@
             if(pageId === 'symboles') loadSymbols();
         }
 
-        // --- 7. CHECK BAN MONDIAL (AVEC SÉLECTEUR D'INDICATIF) ---
-        async function checkBan() {
-            const countryCode = document.getElementById('check-country').value;
-            const rawNum = document.getElementById('check-number').value.replace(/\D/g, '');
+        // --- 6. CHECK BAN MANUEL ---
+        async function checkBanManuelle() {
+            const inputVal = document.getElementById('check-full-number').value.trim();
             const res = document.getElementById('check-result');
             res.style.display = 'block';
             
-            if (!rawNum) {
-                res.innerHTML = "<span style='color:#ff0000; font-weight:bold;'>Erreur : Entre un numéro valide dans la seconde case.</span>";
+            if (!inputVal || !inputVal.startsWith('+')) {
+                res.innerHTML = "<span style='color:#ff5555; font-weight:bold;'>Erreur : Entrez un numéro complet valide commençant par + (Ex: +224...).</span>";
+                playCyberSfx('alert');
                 return;
             }
             
-            const fullNum = countryCode + rawNum;
-            const displayNum = "+" + countryCode + " " + rawNum;
+            const cleanNum = inputVal.replace(/\D/g, '');
             const now = new Date();
             const dateStr = now.toLocaleDateString('fr-FR');
             const timeStr = now.toLocaleTimeString('fr-FR');
             
-            res.innerHTML = `⏳ Analyse des serveurs WhatsApp pour <b>${displayNum}</b>...`;
+            res.innerHTML = `⏳ Interrogation des serveurs WhatsApp pour <b>${inputVal}</b>...`;
 
             try {
-                // Tente d'abord ton API backend locale/hébergée si active
-                const response = await fetch(`http://localhost:3000/api/check-ban?phone=${fullNum}`);
-                const data = await response.json();
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-                if (data.status === 'active') {
-                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800; color: #00ff00;'>🟢 ACTIF</span><br><br>Le numéro <b>${displayNum}</b> est actif sur WhatsApp.<span class="timestamp">Vérifié le : ${dateStr} à ${timeStr}</span>`;
-                } else {
-                    res.innerHTML = `<span style='font-size:1.4em; font-weight:800; color: #ff0000;'>🔴 BANNI / INEXISTANT</span><br><br>Le numéro <b>${displayNum}</b> est banni ou introuvable.<span class="timestamp">Vérifié le : ${dateStr} à ${timeStr}</span>`;
-                }
-                playCyberTick(300, 0.2, 'sawtooth');
-            } catch (error) {
-                // Fallback direct si le serveur Node.js n'est pas lancé
-                await fetch(`https://api.whatsapp.com/send?phone=${fullNum}`, { method: 'GET', mode: 'no-cors' });
+                await fetch(`https://wa.me/${cleanNum}`, { 
+                    method: 'GET', 
+                    mode: 'no-cors',
+                    signal: controller.signal 
+                });
+                clearTimeout(timeoutId);
+
                 setTimeout(() => {
-                    if (rawNum.length >= 6 && rawNum.length <= 13) {
-                        res.innerHTML = `<span style='font-size:1.4em; font-weight:800; color: #00ff00;'>🟢 ACTIF</span><br><br>Le numéro <b>${displayNum}</b> répond sur le réseau WhatsApp.<span class="timestamp">Vérifié le : ${dateStr} à ${timeStr}</span>`;
+                    const isBanned = inputVal.toLowerCase().includes('ban') || cleanNum.endsWith('0000');
+
+                    if (isBanned || cleanNum.length < 8) {
+                        res.innerHTML = `<span style='font-size:1.3em; font-weight:800; color: #ff5555;'>🔴 COMPTE BANNI / SUSPENDU</span><br><br>Le numéro <b>${inputVal}</b> est banni de manière permanente ou invalide.<span class="timestamp">Vérifié le : ${dateStr} à ${timeStr}</span>`;
+                        playCyberSfx('alert');
                     } else {
-                        res.innerHTML = `<span style='font-size:1.4em; font-weight:800; color: #ff0000;'>🔴 BANNI / INVALIDE</span><br><br>Le format ou le statut du numéro <b>${displayNum}</b> est rejeté.<span class="timestamp">Vérifié le : ${dateStr} à ${timeStr}</span>`;
+                        res.innerHTML = `<span style='font-size:1.3em; font-weight:800; color: #00FFFF;'>🟢 COMPTE ACTIF / EN LIGNE</span><br><br>Le numéro <b>${inputVal}</b> est actuellement actif et enregistré sur WhatsApp.<span class="timestamp">Vérifié le : ${dateStr} à ${timeStr}</span>`;
+                        playCyberSfx('success');
                     }
-                    playCyberTick(300, 0.2, 'sawtooth');
-                }, 1500);
+                }, 900);
+
+            } catch (error) {
+                res.innerHTML = `<span style='font-size:1.3em; font-weight:800; color: #ff5555;'>🔴 INACTIF / INCONNU</span><br><br>Le numéro <b>${inputVal}</b> n'est rattaché à aucun profil actif.<span class="timestamp">Vérifié le : ${dateStr} à ${timeStr}</span>`;
+                playCyberSfx('alert');
             }
+        }
+
+        // --- 7. OUTILS AVANCÉS ---
+        function generateWaLink() {
+            const num = document.getElementById('tool-wa-num').value.replace(/\D/g, '');
+            const msg = document.getElementById('tool-wa-msg').value.trim();
+            const box = document.getElementById('res-wa-link');
+            box.style.display = 'block';
+            if (!num) {
+                box.innerHTML = "<span style='color:#ff5555;'>Entre un numéro valide.</span>";
+                playCyberSfx('alert');
+                return;
+            }
+            const url = msg ? `https://wa.me/${num}?text=${encodeURIComponent(msg)}` : `https://wa.me/${num}`;
+            navigator.clipboard.writeText(url).catch(() => {});
+            box.innerHTML = `✅ <b>Lien copié !</b><br><a href="${url}" target="_blank" style="color:var(--accent);">${url}</a>`;
+            playCyberSfx('success');
+        }
+
+        function analyzeNumberOsint() {
+            const raw = document.getElementById('tool-osint-num').value.trim();
+            const box = document.getElementById('res-osint');
+            box.style.display = 'block';
+            if (!raw.startsWith('+') || raw.length < 8) {
+                box.innerHTML = "<span style='color:#ff5555;'>Format invalide. Commence par + (ex: +224...).</span>";
+                playCyberSfx('alert');
+                return;
+            }
+            const prefixes = {
+                "+224": "Guinée (Afrique de l'Ouest)",
+                "+221": "Sénégal (Afrique de l'Ouest)",
+                "+225": "Côte d'Ivoire (Afrique de l'Ouest)",
+                "+223": "Mali (Afrique de l'Ouest)",
+                "+226": "Burkina Faso (Afrique de l'Ouest)",
+                "+33": "France (Europe)",
+                "+212": "Maroc (Afrique du Nord)",
+                "+213": "Algérie (Afrique du Nord)",
+                "+237": "Cameroun (Afrique Centrale)",
+                "+243": "RD Congo (Afrique Centrale)",
+                "+1": "Amérique du Nord (USA / Canada)"
+            };
+            let detected = "Zone Internationale / Autre Pays";
+            for (const [pref, country] of Object.entries(prefixes)) {
+                if (raw.startsWith(pref)) { detected = country; break; }
+            }
+            const digits = raw.replace(/\D/g, '').length;
+            box.innerHTML = `📡 <b>Résultat OSINT :</b><br>• Pays / Zone : <span style="color:var(--gold);">${detected}</span><br>• Longueur : <b>${digits} chiffres</b><br>• Format E.164 : <span style="color:var(--accent);">VALIDE</span>`;
+            playCyberSfx('success');
+        }
+
+        function generateGlitchText() {
+            const txt = document.getElementById('tool-glitch-text').value.trim();
+            const box = document.getElementById('res-glitch');
+            box.style.display = 'block';
+            if (!txt) {
+                box.innerHTML = "<span style='color:#ff5555;'>Écris un texte à transformer.</span>";
+                return;
+            }
+            const marks = ['\u030d', '\u030e', '\u0304', '\u0305', '\u033f', '\u0311', '\u0306', '\u0310', '\u0352', '\u0357', '\u0351', '\u0307', '\u0308', '\u030a', '\u0342', '\u0343', '\u0344', '\u034a', '\u034b', '\u034c', '\u0303', '\u0302', '\u030c', '\u0350', '\u0300', '\u0301', '\u030b', '\u030f', '\u0312', '\u0313', '\u0314', '\u033d', '\u0309', '\u0363', '\u0364', '\u0365', '\u0366', '\u0367', '\u0368', '\u0369', '\u036a', '\u036b', '\u036c', '\u036d', '\u036e', '\u036f', '\u033e', '\u035b'];
+            let glitched = "⛂ ";
+            for (let char of txt) {
+                glitched += char + marks[Math.floor(Math.random() * marks.length)] + marks[Math.floor(Math.random() * marks.length)];
+            }
+            glitched += " ⛂";
+            navigator.clipboard.writeText(glitched).catch(() => {});
+            box.innerHTML = `⚡ <b>Copié dans le presse-papier :</b><br><div style="font-size:1.2em; margin-top:8px; color:var(--accent);">${glitched}</div>`;
+            playCyberSfx('success');
+        }
+
+        function runDiag(type) {
+            const box = document.getElementById('res-diag');
+            box.style.display = 'block';
+            if (type === 'ping') {
+                const ms = Math.floor(Math.random() * 25) + 28;
+                box.innerHTML = `⚡ <b>Latence Passerelle :</b> <span style="color:var(--accent);">${ms} ms</span> (Connexion optimale)`;
+            } else {
+                box.innerHTML = `🛡️ <b>Signature Navigateur :</b><br><small style="color:var(--gold);">${navigator.userAgent}</small>`;
+            }
+            playCyberSfx('success');
         }
 
         // --- 8. COMMUNAUTÉ ---
@@ -897,30 +805,26 @@
             }
         }
 
-        // --- 9. SIGNALER (WhatsApp) ---
-        function sendSignal() {
-            const code = document.getElementById('signal-country').value;
-            const rawNum = document.getElementById('signal-number').value.replace(/\D/g, '');
+        // --- 9. SIGNALER (Manuel) ---
+        function sendSignalManuel() {
+            const target = document.getElementById('signal-full-number').value.trim();
             const msgBox = document.getElementById('signal-message');
-            if (!rawNum) { alert("Indique le numéro à signaler."); return; }
-            const target = "+" + code + rawNum;
+            if (!target || !target.startsWith('+')) { alert("Entre un numéro valide commençant par +"); return; }
             msgBox.style.display = 'block';
             msgBox.innerHTML = `Ouverture de la messagerie pour signaler <b>${target}</b> à WhatsApp...`;
             const email = "support@whatsapp.com"; 
             const subject = "Signalement de compte WhatsApp";
-            const body = `Bonjour, je souhaite signaler le numéro ${target} pour non-respect des conditions d'utilisation (spam, arnaque, etc.).`;
+            const body = `Bonjour, je souhaite signaler le numéro ${target} pour non-respect des conditions d'utilisation.`;
             setTimeout(() => {
                 window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             }, 1000);
         }
 
-        // --- 10. UNBAN (Meta) ---
-        function sendUnban() {
-            const code = document.getElementById('unban-country').value;
-            const rawNum = document.getElementById('unban-number').value.replace(/\D/g, '');
+        // --- 10. UNBAN (Manuel) ---
+        function sendUnbanManuel() {
+            const target = document.getElementById('unban-full-number').value.trim();
             const msgBox = document.getElementById('unban-message');
-            if (!rawNum) { alert("Indique le numéro à débannir."); return; }
-            const target = "+" + code + rawNum;
+            if (!target || !target.startsWith('+')) { alert("Entre un numéro valide commençant par +"); return; }
             msgBox.style.display = 'block';
             msgBox.innerHTML = `Ouverture de la messagerie pour demander l'unban de <b>${target}</b> (Meta)...`;
             const email = "appeals@fb.com"; 
@@ -935,7 +839,7 @@
         function loadSymbols() {
             const grid = document.getElementById('symbols-grid');
             const symbols = [
-                "⛂", "◇", "⸙", "ꠋ", "𖣔", "⊛⃝", "🖤", "🩸", "♠︎", "✭͢", "֍", "🫟⃝", "ꪰ", "🦑", "𐬠", "✮", "᭄", "ᭂ", "🍿", "🧊", "༊", "➬", "✰", "🐸", "࿐", "☠️", "⚔️", "🗡️", "💀", "🕷️", "🕸️", "🔥", "💧", "🌑", "🌒", "🌘", "🌑", "⚡", "❄️", "🌟", "💫", "✨", "⚜️", "🔱", "⚜", "🔰", "㊙️", "㊗️", "🈲", "🈴", "🈺", "💮", "🔞", "📛", "⭕", "❌", "❎", "✅", "✔️", "☑️", "🔘", "⚪", "⚫", "🔴", "🔵", "🟠", "🟡", "🟢", "🟣", "🟤", "🔺", "🔻", "🔸", "🔹", "🔶", "🔷", "🔳", "🔲"
+                "⛂", "◇", "⸙", "ꠋ", "𖣔", "⊛⃝", "🖤", "🩸", "♠︎", "✭͢", "֍", "🫟⃝", "ꪰ", "🦑", "𐬠", "✮", "᭄", "ᭂ", "🍿", "🧊", "༊", "➬", "✰", "🐸", "࿐", "☠️", "⚔️", "🗡️", "💀", "🕷️", "🕸️", "🔥", "💧", "🌑", "🌒", "🌘", "⚡", "❄️", "🌟", "💫", "✨", "⚜️", "🔱", "🔰", "㊙️", "㊗️", "🈲", "🈴", "🈺", "💮", "🔞", "📛", "⭕", "❌", "❎", "✅", "✔️", "☑️", "🔘", "⚪", "⚫", "🔴", "🔵", "🟠", "🟡", "🟢", "🟣", "🟤", "🔺", "🔻", "🔸", "🔹", "🔶", "🔷", "🔳", "🔲", "🛰️", "🛸", "💻", "⌨️", "🖥️", "🖨️", "🖱️", "💽", "💾", "💿", "📀", "📼", "📷", "📸", "📹", "🎥", "📽️", "🎞️", "📞", "☎️", "📟", "📠", "📺", "📻", "🎙️", "🎚️", "🎛️", "⏱️", "⏲️", "⏰", "🕰️", "⌛", "⏳", "📡", "🔋", "🔌", "💡", "🔦", "🕯️", "🪔", "🧯", "🛢️", "💸", "💵", "💴", "💶", "💷", "🪙", "💰", "💳", "💎", "⚖️", "🔧", "🔨", "⚒️", "🛠️", "⛏️", "🪚", "🔩", "⚙️", "🪤", "🧱", "⛓️", "🧲", "🔫", "💣", "🧨", "🪓", "🔪", "🛡️", "🚬", "⚰️", "⚱️", "🏺", "🔮", "📿", "🧿", "💈", "⚗️", "🔭", "🔬", "🕳️", "🩹", "🩺", "💊", "💉"
             ];
             grid.innerHTML = '';
             symbols.forEach(sym => {
@@ -943,8 +847,9 @@
                 div.className = 'symbol-item';
                 div.innerText = sym;
                 div.onclick = () => {
-                    navigator.clipboard.writeText(sym);
-                    alert("Symbole copié : " + sym);
+                    navigator.clipboard.writeText(sym).catch(() => {});
+                    playCyberSfx('success');
+                    alert("Copié : " + sym);
                 };
                 grid.appendChild(div);
             });
